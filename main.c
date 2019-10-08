@@ -6,29 +6,31 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 19:12:41 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/08 13:45:58 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/08 14:32:39 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "minilibx_macos/mlx.h"
+#include "fdf.h"
 
 # define GORIZONT 1000
 # define VERTICAL 1000
 
 int deal_key(int key, void *param)
 {
-	printf("key = %d\n", key);
+	param = 0;
 	if (key == 53)
+	{
+		printf("exit = %d\n", key);
 		exit(0);
-
+	}
+	printf("key = %d\n", key);
 	//mix_pixet_put(mlx_ptr, win_ptr, );
 	return (0);
 }
 
 int mouse_click(int key, void *param)
 {
+	param = 0;
 	printf("mouse_click = %d\n", key);
 	//mix_pixet_put(mlx_ptr, win_ptr, );
 	return (0);
@@ -36,6 +38,7 @@ int mouse_click(int key, void *param)
 
 int mouse_move(int key, void *param)
 {
+	param = 0;
 	printf("mouse move = %d\n", key);
 	//mix_pixet_put(mlx_ptr, win_ptr, );
 	return (0);
