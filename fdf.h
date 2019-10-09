@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/08 20:23:38 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/09 15:19:59 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct	s_point
 {
 	double		x;
 	double		y;
-	t_color		c;
+	//t_color		c;
 }				t_point;
 
 typedef struct	s_line
@@ -38,6 +38,18 @@ typedef struct	s_line
 	t_point		start;
 	t_point		finish;
 }				t_line;
+
+typedef struct	s_bresenham
+{
+	int 		deltax;
+	int			deltay;
+	int 		error;
+	int 		dirx;
+	int 		diry;
+	int 		x;
+	int			y;
+//	t_line		line;
+}				t_bresenham;
 
 void put_line(void *mlx_ptr, void *win_ptr, t_line *line);
 
