@@ -6,17 +6,20 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/10 17:26:55 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/11 14:22:27 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_FDF_H
 # define FT_FDF_H
 
-#include <math.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "minilibx_macos/mlx.h"
+# include <math.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include "minilibx_macos/mlx.h"
+# include "libft/libft.h"
+# include "get_next_line/get_next_line.h"
 
 //typedef struct	s_color
 //{
@@ -30,6 +33,7 @@ typedef struct	s_point
 {
 	double		x;
 	double		y;
+	//double		z;
 	//t_color		c;
 }				t_point;
 
@@ -56,6 +60,9 @@ typedef struct	s_bresenham
 typedef struct	s_window
 {
 	void		*ptr;
+	int			width;
+	int			height;
+	char 		*title;
 }				t_window;
 
 typedef struct  s_mlx
@@ -63,7 +70,8 @@ typedef struct  s_mlx
 	void 		*ptr;
 	t_window	win;
 }               t_mlx;
-
-void put_line(t_mlx *mlx, t_line *line);
+int				input_map(char *av);
+void			put_line(t_mlx *mlx, t_line *line);
+void			fdf(t_mlx *mlx, t_line *line);
 
 #endif

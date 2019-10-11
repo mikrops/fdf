@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="42fdf_mars" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="./maps/mars.fdf" PASS_PARENT_ENVS_2="true" PROJECT_NAME="fdf" TARGET_NAME="fdf" CONFIG_NAME="Debug" RUN_PATH="$PROJECT_DIR$/resources/fdf/fdf">
+    <method v="2">
+      <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+    </method>
+  </configuration>
+</component>
