@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/11 14:22:27 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/11 17:22:10 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct	s_point
 {
 	double		x;
 	double		y;
-	//double		z;
+	double		z;
 	//t_color		c;
 }				t_point;
 
@@ -70,6 +70,7 @@ typedef struct  s_mlx
 	void 		*ptr;
 	t_window	win;
 }               t_mlx;
+
 int				input_map(char *av);
 void			put_line(t_mlx *mlx, t_line *line);
 void			fdf(t_mlx *mlx, t_line *line);
