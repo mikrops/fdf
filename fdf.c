@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:07:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/11 12:13:17 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/12 18:04:08 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int mouse_move(int key, void *param)
 	return (0);
 }
 
-void fdf(t_mlx *mlx, t_line *line)
+void fdf(t_mlx *mlx, t_line *line, t_map *map)
 {
 	mlx->ptr = mlx_init();
-	mlx->win.width = 1000;
-	mlx->win.height = 1000;
+	mlx->win.width = WIDTH;
+	mlx->win.height = HEIGHT;
 	mlx->win.title = "mlx 21";
 	mlx->win.ptr = mlx_new_window(mlx->ptr, mlx->win.width, mlx->win.height, mlx->win.title);
 
@@ -54,15 +54,19 @@ void fdf(t_mlx *mlx, t_line *line)
 	//mlx_pixel_put(mlx_ptr, win_ptr, GORIZONT/2, VERTICAL/2, 0xFFFFFF);
 
 	//рисуем линию
-	line->start.x = 100; line->start.y = 100;
-	line->end.x = 100; line->end.y = 170;
-	put_line(mlx, line);
-	line->end.x = 200; line->end.y = 170;
-	put_line(mlx, line);
-	line->end.x = 100; line->end.y = 30;
-	put_line(mlx, line);
-	line->end.x = 200; line->end.y = 30;
-	put_line(mlx, line);
+	draw_grid(mlx, line, map);
+//	line->start.x = 100; line->start.y = 100;
+//	line->end.x = 100; line->end.y = 170;
+//	put_line(mlx, line);
+//	line->end.x = 200; line->end.y = 170;
+//	put_line(mlx, line);
+//	line->end.x = 100; line->end.y = 30;
+//	put_line(mlx, line);
+//	line->end.x = 200; line->end.y = 30;
+//	put_line(mlx, line);
+
+	//рисуем 2D сетку
+
 
 	//клава
 	mlx_hook(mlx->win.ptr, 2, 0, deal_key, 0);

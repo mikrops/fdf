@@ -6,12 +6,14 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/11 17:22:10 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/12 17:59:45 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_FDF_H
 # define FT_FDF_H
+# define WIDTH 1000
+# define HEIGHT 1000
 
 # include <math.h>
 # include <stdlib.h>
@@ -33,7 +35,7 @@ typedef struct	s_point
 {
 	double		x;
 	double		y;
-	double		z;
+	//double		z;
 	//t_color		c;
 }				t_point;
 
@@ -69,10 +71,20 @@ typedef struct  s_mlx
 {
 	void 		*ptr;
 	t_window	win;
+	double		zoom;
 }               t_mlx;
 
-int				input_map(char *av);
+typedef struct	s_map
+{
+	int			row;
+	int 		col;
+	int			**start;
+	int 		**other;
+}				t_map;
+
+int				input_map(char *av, t_map *map);
 void			put_line(t_mlx *mlx, t_line *line);
-void			fdf(t_mlx *mlx, t_line *line);
+void			draw_grid(t_mlx *mlx, t_line *line, t_map *map);
+void			fdf(t_mlx *mlx, t_line *line, t_map *map);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 17:16:22 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/10 17:24:18 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/12 18:20:46 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	put_line(t_mlx *mlx, t_line *line)
 	while (bresenham.x1 != bresenham.x2 || bresenham.y1 != bresenham.y2)
 	{
 		mlx_pixel_put(mlx->ptr, mlx->win.ptr, bresenham.x1, bresenham.y1, 0xaaFFFF);
-		printf("pixel [%d/%d %d/%d]\t", bresenham.x1, bresenham.x2, bresenham.y1, bresenham.y2);
+		//printf("pixel [%d/%d %d/%d]\t", bresenham.x1, bresenham.x2, bresenham.y1, bresenham.y2);
 		bresenham.error = bresenham.deltaerror * 2;
 		if (bresenham.error > -bresenham.deltay)
 		{
@@ -46,7 +46,7 @@ void	put_line(t_mlx *mlx, t_line *line)
 			bresenham.deltaerror += bresenham.deltax;
 			bresenham.y1 += bresenham.diry;
 		}
-		printf("pixel [%d/%d %d/%d]\n", bresenham.x1, bresenham.x2, bresenham.y1, bresenham.y2);
+		//printf("pixel [%d/%d %d/%d]\n", bresenham.x1, bresenham.x2, bresenham.y1, bresenham.y2);
 	}
-	printf("\n");
+	//printf("\n");
 }
