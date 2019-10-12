@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/11 21:02:27 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/12 11:42:21 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,25 +77,26 @@ void	fill_map(char *map, int y, int x)
 {
 	int i;
 	int j;
-	int digit;
 	int **arr;
 
 	i = 0;
 	j = 0;
-	digit = 0;
 	arr = ft_map_int(y, x);
 	while(j < y)
 	{
 		while (i < x)
 		{
+			printf("[map = %c, digit = %d] ", *map, arr[j][i]);
 			if (ft_isdigit(*map))
 			{
-				digit = ft_atoi(map);
-				map += ft_intcount(digit);
+				arr[j][i] = ft_atoi(map);
+				printf("[map = %c, digit = %d] ", *map, arr[j][i]);
+				map += ft_intcount(arr[j][i]);
 			}
 			else
 				i++;
 		}
+		printf("\n");
 		i = 0;
 		j++;
 	}
@@ -118,6 +119,7 @@ int	input_map(char *av)
 	tmp = ft_memalloc(1);
 //	list = ft_memalloc(sizeof(t_list));
 //	start = ft_memalloc(sizeof(t_list));
+
 //
 //	start = list;
 	printf("open(fd = %d)\n", fd);
