@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 17:16:22 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/12 18:20:46 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/14 13:30:42 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	put_line(t_mlx *mlx, t_line *line)
 {
 	t_bresenham	bresenham;
 	init_bresenham(&bresenham, line);
-
+	mlx_pixel_put(mlx->ptr, mlx->win.ptr, bresenham.x1, bresenham.y1, 0xaaFFFF);
 	while (bresenham.x1 != bresenham.x2 || bresenham.y1 != bresenham.y2)
 	{
 		mlx_pixel_put(mlx->ptr, mlx->win.ptr, bresenham.x1, bresenham.y1, 0xaaFFFF);

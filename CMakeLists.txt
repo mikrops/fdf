@@ -29,6 +29,7 @@ add_executable(fdf main.c fdf.h
         libft/ft_strcmp.c
         libft/ft_strncmp.c
         libft/ft_atoi.c
+        libft/ft_atoi_base.c
         libft/ft_isalpha.c
         libft/ft_isdigit.c
         libft/ft_isalnum.c
@@ -52,6 +53,7 @@ add_executable(fdf main.c fdf.h
         libft/ft_strtrim.c
         libft/ft_strsplit.c
         libft/ft_itoa.c
+        libft/ft_pow.c
         libft/ft_putchar.c
         libft/ft_putstr.c
         libft/ft_putendl.c

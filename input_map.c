@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/12 18:20:04 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/14 20:15:28 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,30 @@ int count_digit(char *str)
 	return (count);
 }
 
+/*
+**	выделение памяти под двумерный массив void
+*/
+
+void	**ft_map_void(int row, int col, int size_row, int size_col)
+{
+	int		i;
+	void	**map;
+
+	i = 0;
+	map = (void **)ft_memalloc(size_row * (row + 1));
+	map[row] = NULL;
+	while (i < row)
+	{
+		map[i] = (void *)ft_memalloc(size_col * (col + 1));
+		i++;
+	}
+	return (map);
+}
+
+/*
+**	Заполнение двумерного массива
+ */
+
 int	**fill_map(char *str, int y, int x)
 {
 	int i;
@@ -58,6 +82,41 @@ int	**fill_map(char *str, int y, int x)
 			{
 				map[j][i] = ft_atoi(str);
 				str += ft_intcount(map[j][i]);
+				i++;
+			}
+			else if (*str == ',')
+				str += 10;
+			else
+				str++;
+		}
+		str++;
+		i = 0;
+		j++;
+	}
+	return (map);
+}
+
+/*
+**	Заполнение двумерного массива
+ */
+
+t_point	**fill_map_point(char *str, int y, int x)
+{
+	int i;
+	int j;
+	t_point **map;
+
+	i = 0;
+	j = 0;
+	map = (t_point **)ft_map_void(y, x, sizeof(t_point *), sizeof(t_point));
+	while(j < y)
+	{
+		while (*str != '\n')
+		{
+			if (ft_isdigit(*str))
+			{
+				map[j][i].z = ft_atoi(str);
+				str += ft_intcount((int)map[j][i].z);
 				i++;
 			}
 			else if (*str == ',')
@@ -91,13 +150,36 @@ int	input_map(char *av, t_map *map)
 		tmp = ft_strjoin(tmp, str);			//!!!!!исправить ft_strjoin!!!!!!!!
 		free(str);
 		tmp = ft_strjoin(tmp, "\n");	//!!!!!исправить ft_strjoin!!!!!!!!
-		//printf("i = %d \t %s\n", i, str);
 		j++;
 	}
 	printf("close(fd = %d) j = %d i = %d\n", close(fd), j, i);
 	map->col = j;
 	map->row = i;
 	map->start = fill_map(tmp, j, i);
+	//пробуем структуры
+	map->start_p = fill_map_point(tmp, j, i);
+	printf("int = %lu, point = %lu\n", sizeof(map->start), sizeof(map->start_p));
+	printf("%d\n", map->start[1][0]);
+
+
+	dprintf(1, "%d\n", 0xFFFFFF);
+//	int b = 0xFFFFFFd;
+	int b = 'A';
+	printf("%d\n", b - 55);
+//	char *str = "0xFFFFFF";
+
+
+/*
+ * НОРМУУУУУ!!! atoi_base
+**	Возвращает десятичное число переведенное из строки в base системе счисления
+*/
+
+
+	printf("atoi_base = %d\n", ft_atoi_base("0xFFFFFF", 16));
+
+
+
+	//закончили со структурой
 	ft_put_map_int_fd(map->start, j, i, 1);
 	//free(tmp);
 	return (0);

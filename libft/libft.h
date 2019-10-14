@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 21:16:18 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/09/24 20:03:36 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/14 19:21:25 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,4 +134,15 @@ void				ft_put_map_int_fd(int **map, int row, int col, int fd);
 void				ft_put_map_chr_fd(char **map, int row, int col, int fd);
 void				ft_map_int_del(int **map, size_t row);
 void				ft_map_chr_del(char **map, size_t row);
+
+/*
+**	My extra functions (fdf)
+**	Мои подопнительные функции (fdf)
+**
+**	2019/10/14 18:59:07
+*/
+
+int					ft_pow(int number, int pow);
+int					ft_atoi_base(char *str, int base);
+
 #endif
