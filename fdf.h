@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/15 14:54:41 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/15 14:56:08 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct	s_map
 	int 		col;
 	int			**start;
 	int 		**other;
+	double		iso;
 	t_point		**start_p;
 	t_point		**other_p;
 }				t_map;

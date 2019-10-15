@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/15 15:19:19 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/15 16:47:02 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int count_digit(char *str)
 **	выделение памяти под двумерный массив void
 */
 
-void	**ft_map_void(int row, int col, int size_row, int size_col)
+void	**ft_map_void(int row, int col, size_t size_row, size_t size_col)
 {
 	int		i;
 	void	**map;
@@ -165,23 +165,11 @@ int	input_map(char *av, t_map *map)
 		j++;
 	}
 	printf("close(fd = %d) j = %d i = %d\n", close(fd), j, i);
-	map->col = j;
-	map->row = i;
+	map->col = i;
+	map->row = j;
 	map->start = fill_map(tmp, j, i);
 	//пробуем структуры
 	map->start_p = fill_map_point(tmp, j, i);
-
-
-/*
- * НОРМУУУУУ!!! atoi_base
-**	Возвращает десятичное число переведенное из строки в base системе счисления
-*/
-
-//	printf("x = %f\n", map->start_p[18][14].x);
-//	printf("y = %f\n", map->start_p[18][14].y);
-//	printf("z = %f\n", map->start_p[18][14].z);
-//	printf("c = %d\n", map->start_p[18][14].color);
-
 
 
 	//закончили со структурой

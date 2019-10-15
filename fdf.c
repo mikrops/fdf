@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:07:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/12 18:04:08 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/15 16:04:41 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,30 @@ void fdf(t_mlx *mlx, t_line *line, t_map *map)
 	mlx->ptr = mlx_init();
 	mlx->win.width = WIDTH;
 	mlx->win.height = HEIGHT;
-	mlx->win.title = "mlx 21";
+	mlx->win.title = "mmonahan 21";
 	mlx->win.ptr = mlx_new_window(mlx->ptr, mlx->win.width, mlx->win.height, mlx->win.title);
 
 	//рисуем пиксель
 	//mlx_pixel_put(mlx_ptr, win_ptr, GORIZONT/2, VERTICAL/2, 0xFFFFFF);
 
 	//рисуем линию
+	if (map)
+		;
 	draw_grid(mlx, line, map);
-//	line->start.x = 100; line->start.y = 100;
-//	line->end.x = 100; line->end.y = 170;
-//	put_line(mlx, line);
+//	int i = 0;
+//	line->start.x = 50;
+//	line->start.y = 50;
+//	line->end.x = 100;
+//	line->end.y = 50;
+//	while (i < 5)
+//	{
+//		put_line(mlx, line);
+//		line->start.x = line->end.x;
+//		line->end.x += 50;
+//		line->start.y += 1;
+//		line->end.y += 1;
+//		i++;
+//	}
 //	line->end.x = 200; line->end.y = 170;
 //	put_line(mlx, line);
 //	line->end.x = 100; line->end.y = 30;

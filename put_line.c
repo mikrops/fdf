@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 17:16:22 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/14 13:30:42 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/15 17:18:38 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,16 @@ void	init_bresenham(t_bresenham *bresenham, t_line *line)
 
 void	put_line(t_mlx *mlx, t_line *line)
 {
+	int col;
+
+	col = 0;
 	t_bresenham	bresenham;
 	init_bresenham(&bresenham, line);
-	mlx_pixel_put(mlx->ptr, mlx->win.ptr, bresenham.x1, bresenham.y1, 0xaaFFFF);
+	//mlx_pixel_put(mlx->ptr, mlx->win.ptr, bresenham.x1, bresenham.y1, 0xaaFFFF);
 	while (bresenham.x1 != bresenham.x2 || bresenham.y1 != bresenham.y2)
 	{
-		mlx_pixel_put(mlx->ptr, mlx->win.ptr, bresenham.x1, bresenham.y1, 0xaaFFFF);
+		col = line->start.z > 0 ? 12342311 : 123423;
+		mlx_pixel_put(mlx->ptr, mlx->win.ptr, bresenham.x1, bresenham.y1, col);
 		//printf("pixel [%d/%d %d/%d]\t", bresenham.x1, bresenham.x2, bresenham.y1, bresenham.y2);
 		bresenham.error = bresenham.deltaerror * 2;
 		if (bresenham.error > -bresenham.deltay)
