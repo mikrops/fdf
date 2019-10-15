@@ -6,11 +6,14 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/14 20:15:28 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/15 15:19:19 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	ft_put_map_point_fd(t_point **map, int row, int col, int fd);
+
 
 /*
 **	Возвращает количество чисел в строке, игнорируя цвет
@@ -105,6 +108,7 @@ t_point	**fill_map_point(char *str, int y, int x)
 	int i;
 	int j;
 	t_point **map;
+	char *tmp;
 
 	i = 0;
 	j = 0;
@@ -117,10 +121,18 @@ t_point	**fill_map_point(char *str, int y, int x)
 			{
 				map[j][i].z = ft_atoi(str);
 				str += ft_intcount((int)map[j][i].z);
+				map[j][i].x = i;
+				map[j][i].y = j;
+				if (*str == ',')
+				{
+					str++;
+					tmp = str;
+					tmp[8] = '\0';
+					map[j][i].color = ft_atoi_base(tmp, 16);
+					str += 9;
+				}
 				i++;
 			}
-			else if (*str == ',')
-				str += 10;
 			else
 				str++;
 		}
@@ -158,15 +170,6 @@ int	input_map(char *av, t_map *map)
 	map->start = fill_map(tmp, j, i);
 	//пробуем структуры
 	map->start_p = fill_map_point(tmp, j, i);
-	printf("int = %lu, point = %lu\n", sizeof(map->start), sizeof(map->start_p));
-	printf("%d\n", map->start[1][0]);
-
-
-	dprintf(1, "%d\n", 0xFFFFFF);
-//	int b = 0xFFFFFFd;
-	int b = 'A';
-	printf("%d\n", b - 55);
-//	char *str = "0xFFFFFF";
 
 
 /*
@@ -174,13 +177,17 @@ int	input_map(char *av, t_map *map)
 **	Возвращает десятичное число переведенное из строки в base системе счисления
 */
 
-
-	printf("atoi_base = %d\n", ft_atoi_base("0xFFFFFF", 16));
+//	printf("x = %f\n", map->start_p[18][14].x);
+//	printf("y = %f\n", map->start_p[18][14].y);
+//	printf("z = %f\n", map->start_p[18][14].z);
+//	printf("c = %d\n", map->start_p[18][14].color);
 
 
 
 	//закончили со структурой
 	ft_put_map_int_fd(map->start, j, i, 1);
+	printf("\n");
+	ft_put_map_point_fd(map->start_p, j, i, 1);
 	//free(tmp);
 	return (0);
 }
@@ -196,3 +203,31 @@ int	input_map(char *av, t_map *map)
 **	----------------------------------
 **
 */
+
+
+/*	УДАЛИТЬ или для лога оставить!
+**	Выводит двумерный числовой(int) массив размерами row x col в поток fd
+*/
+
+void	ft_put_map_point_fd(t_point **map, int row, int col, int fd)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (j < row)
+	{
+		while (i < col)
+		{
+			dprintf(fd, "[%.f,%.f,%.f,%d]\t", map[j][i].x, map[j][i].y, map[j][i].z, map[j][i].color);
+//			ft_putnbr_fd(map[j][i].z, fd);
+//			ft_putchar_fd('\t', fd);
+			i++;
+		}
+		dprintf(fd, "\n");
+//		ft_putstr_fd("\n", fd);
+		i = 0;
+		j++;
+	}
+}

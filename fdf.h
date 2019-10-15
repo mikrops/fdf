@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/14 17:48:43 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/15 14:54:41 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,21 @@
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
 
-//typedef struct	s_color
+//typedef struct		s_color
 //{
-//	int			r;
-//	int			g;
-//	int			b;
-//	int			c;
-//}				t_color;
+//	unsigned char	red;
+//	unsigned char	green;
+//	unsigned char	blue;
+//	float			brightness;
+//}					t_color;
 
 typedef struct	s_point
 {
 	double		x;
 	double		y;
 	double		z;
-	//t_color		c;
+	int 		color;
+	//t_color		_color;
 }				t_point;
 
 typedef struct	s_line
@@ -81,6 +82,7 @@ typedef struct	s_map
 	int			**start;
 	int 		**other;
 	t_point		**start_p;
+	t_point		**other_p;
 }				t_map;
 
 int				input_map(char *av, t_map *map);
