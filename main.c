@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void usage(int error)
+static void	usage(int error)
 {
 	if (error == -1)
 		write(2, "Пустой файл\n", 22);
@@ -29,7 +29,7 @@ void usage(int error)
 		write(2, "Error\n", 6);
 }
 
-int main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_mlx	mlx;
 	t_line	line;
@@ -45,8 +45,8 @@ int main(int ac, char **av)
 	input_map(av[1], &map);
 
 
-	if (mlx.win.height || line.start.y)
-		;
+//	if (mlx.win.height || line.start.y)
+//		;
 	fdf(&mlx, &line, &map);
     return 0;
 }

@@ -6,20 +6,19 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/16 14:44:14 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/16 20:16:05 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_put_map_point_fd(t_point **map, int row, int col, int fd);
-
+static void	ft_put_map_point_fd(t_point **map, int row, int col, int fd);
 
 /*
 **	Возвращает количество чисел в строке, игнорируя цвет
 */
 
-int count_digit(char *str)
+static int count_digit(char *str)
 {
 	int i;
 	int digit;
@@ -45,75 +44,18 @@ int count_digit(char *str)
 }
 
 /*
-**	выделение памяти под двумерный массив void
-*/
-
-void	**ft_map_void(int row, int col, size_t size_row, size_t size_col)
-{
-	int		i;
-	void	**map;
-
-	i = 0;
-	map = (void **)ft_memalloc(size_row * (row + 1));
-	map[row] = NULL;
-	while (i < row)
-	{
-		map[i] = (void *)ft_memalloc(size_col * (col + 1));
-		i++;
-	}
-	return (map);
-}
-
-/*
-**	Заполнение двумерного массива
+**	Заполнение двумерного массива типа структура point
  */
 
-int	**fill_map(char *str, int y, int x)
-{
-	int i;
-	int j;
-	int **map;
-
-	i = 0;
-	j = 0;
-	map = ft_map_int(y, x);
-	while(j < y)
-	{
-		while (*str != '\n')
-		{
-			if (ft_isdigit(*str))
-			{
-				map[j][i] = ft_atoi(str);
-				str += ft_intcount(map[j][i]);
-				i++;
-			}
-			else if (*str == ',')
-				str += 10;
-			else
-				str++;
-		}
-		str++;
-		i = 0;
-		j++;
-	}
-	return (map);
-}
-
-/*
-**	Заполнение двумерного массива
- */
-
-t_point	**fill_map_point(char *str, int y, int x)
+static t_point	**fill_map_point(char *str, int y, int x)
 {
 	int		i;
 	int		j;
-	double	k;
 	t_point	**map;
 	char	*tmp;
 
 	i = 0;
 	j = 0;
-	k = 20;
 	map = (t_point **)ft_map_void(y, x, sizeof(t_point *), sizeof(t_point));
 	while(j < y)
 	{
@@ -123,8 +65,8 @@ t_point	**fill_map_point(char *str, int y, int x)
 			{
 				map[j][i].z = ft_atoi(str);
 				str += ft_intcount((int)map[j][i].z);
-				map[j][i].x = (i + 1) * k;
-				map[j][i].y = (j + 1) * k;
+				map[j][i].x = (i + 1);
+				map[j][i].y = (j + 1);
 				if (*str == ',')
 				{
 					str++;
@@ -143,6 +85,30 @@ t_point	**fill_map_point(char *str, int y, int x)
 		j++;
 	}
 	return (map);
+}
+
+static t_point	**copy_map_point(t_point **start, int y, int x)
+{
+	int		i;
+	int		j;
+	t_point	**other;
+
+	i = 0;
+	j = 0;
+	other = (t_point **)ft_map_void(y, x, sizeof(t_point *), sizeof(t_point));
+	while(j < y)
+	{
+		while (i < x)
+		{
+			other[j][i].z = start[j][i].z;
+			other[j][i].x = start[j][i].x;
+			other[j][i].y = start[j][i].y;
+			i++;
+		}
+		i = 0;
+		j++;
+	}
+	return (other);
 }
 
 int	input_map(char *av, t_map *map)
@@ -169,15 +135,16 @@ int	input_map(char *av, t_map *map)
 	printf("close(fd = %d) j = %d i = %d\n", close(fd), j, i);
 	map->col = i;
 	map->row = j;
-	map->start = fill_map(tmp, j, i);
 	//пробуем структуры
 	map->start_p = fill_map_point(tmp, j, i);
-
-
+	map->other_p = copy_map_point(map->start_p, j, i);
 	//закончили со структурой
-	ft_put_map_int_fd(map->start, j, i, 1);
-	printf("\n");
+
+	printf("-----------start_p--------\n");
 	ft_put_map_point_fd(map->start_p, j, i, 1);
+	printf("-----------other_p--------\n");
+	ft_put_map_point_fd(map->other_p, j, i, 1);
+	printf("\n");
 	//free(tmp);
 	return (0);
 }
@@ -199,7 +166,7 @@ int	input_map(char *av, t_map *map)
 **	Выводит двумерный числовой(int) массив размерами row x col в поток fd
 */
 
-void	ft_put_map_point_fd(t_point **map, int row, int col, int fd)
+static void	ft_put_map_point_fd(t_point **map, int row, int col, int fd)
 {
 	int i;
 	int j;

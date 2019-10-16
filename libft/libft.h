@@ -144,5 +144,6 @@ void				ft_map_chr_del(char **map, size_t row);
 
 int					ft_pow(int number, int pow);
 int					ft_atoi_base(char *str, int base);
-
+void				**ft_map_void(int row, int col, size_t size_row,
+					size_t size_col);
 #endif

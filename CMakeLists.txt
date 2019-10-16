@@ -79,6 +79,7 @@ add_executable(fdf main.c fdf.h
         libft/ft_del.c
         libft/ft_map_char.c
         libft/ft_map_int.c
+        libft/ft_map_void.c
         libft/ft_put_map_int_fd.c
         libft/ft_put_map_chr_fd.c
         libft/ft_map_int_del.c

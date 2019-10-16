@@ -6,14 +6,15 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/15 14:56:08 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/16 20:50:33 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_FDF_H
 # define FT_FDF_H
-# define WIDTH 2000
+# define WIDTH 1000
 # define HEIGHT 1000
+# define ISO 0.523599
 
 # include <math.h>
 # include <stdlib.h>
@@ -79,8 +80,11 @@ typedef struct	s_map
 {
 	int			row;
 	int 		col;
-	int			**start;
-	int 		**other;
+	double		centry;
+	double		centrx;
+	double		scale;
+	double		height;
+	double		angle;
 	double		iso;
 	t_point		**start_p;
 	t_point		**other_p;
@@ -88,6 +92,7 @@ typedef struct	s_map
 
 int				input_map(char *av, t_map *map);
 void			put_line(t_mlx *mlx, t_line *line);
+void			project(t_map *map);
 void			draw_grid(t_mlx *mlx, t_line *line, t_map *map);
 void			fdf(t_mlx *mlx, t_line *line, t_map *map);
 
