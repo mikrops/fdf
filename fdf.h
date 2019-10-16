@@ -12,7 +12,7 @@
 
 #ifndef FT_FDF_H
 # define FT_FDF_H
-# define WIDTH 500
+# define WIDTH 2000
 # define HEIGHT 1000
 
 # include <math.h>

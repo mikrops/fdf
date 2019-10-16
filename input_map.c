@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/15 16:47:02 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/16 14:44:14 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,15 @@ int	**fill_map(char *str, int y, int x)
 
 t_point	**fill_map_point(char *str, int y, int x)
 {
-	int i;
-	int j;
-	t_point **map;
-	char *tmp;
+	int		i;
+	int		j;
+	double	k;
+	t_point	**map;
+	char	*tmp;
 
 	i = 0;
 	j = 0;
+	k = 20;
 	map = (t_point **)ft_map_void(y, x, sizeof(t_point *), sizeof(t_point));
 	while(j < y)
 	{
@@ -121,8 +123,8 @@ t_point	**fill_map_point(char *str, int y, int x)
 			{
 				map[j][i].z = ft_atoi(str);
 				str += ft_intcount((int)map[j][i].z);
-				map[j][i].x = i;
-				map[j][i].y = j;
+				map[j][i].x = (i + 1) * k;
+				map[j][i].y = (j + 1) * k;
 				if (*str == ',')
 				{
 					str++;
