@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/16 20:16:05 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/17 13:56:14 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static t_point	**fill_map_point(char *str, int y, int x)
 				map[j][i].y = (j + 1);
 				if (*str == ',')
 				{
+					//ИСПРАВИТЬ!!! длина цвета не фексированна!!!
 					str++;
 					tmp = str;
 					tmp[8] = '\0';

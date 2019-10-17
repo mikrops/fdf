@@ -6,15 +6,29 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/16 20:50:33 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/17 20:54:22 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_FDF_H
 # define FT_FDF_H
-# define WIDTH 1000
-# define HEIGHT 1000
+# define WIDTH 1000.0
+# define HEIGHT 1000.0
 # define ISO 0.523599
+
+/*
+**	Коды клавишь
+*/
+
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_DOWN 125
+# define KEY_UP 126
+# define KEY_EQUALS 24
+# define KEY_MINUS 27
+# define MUSE_SCROLL_BACK 4
+# define MUSE_SCROLL_FORARD 5
+
 
 # include <math.h>
 # include <stdlib.h>
@@ -72,8 +86,6 @@ typedef struct	s_window
 typedef struct  s_mlx
 {
 	void 		*ptr;
-	t_window	win;
-	double		zoom;
 }               t_mlx;
 
 typedef struct	s_map
@@ -85,15 +97,21 @@ typedef struct	s_map
 	double		scale;
 	double		height;
 	double		angle;
-	double		iso;
 	t_point		**start_p;
 	t_point		**other_p;
 }				t_map;
 
+typedef struct	s_fdf
+{
+	t_mlx		mlx;
+	t_window	win;
+	t_map		map;
+}				t_fdf;
+
 int				input_map(char *av, t_map *map);
-void			put_line(t_mlx *mlx, t_line *line);
+void			put_line(t_mlx *mlx, t_window *win, t_line *line);
 void			project(t_map *map);
-void			draw_grid(t_mlx *mlx, t_line *line, t_map *map);
-void			fdf(t_mlx *mlx, t_line *line, t_map *map);
+void			draw_grid(t_fdf *fdf);
+void			fdf(t_fdf *fdf);
 
 #endif

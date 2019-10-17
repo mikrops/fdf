@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:07:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/16 21:02:54 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/17 21:04:22 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,60 @@
 
 void	ft_put_map_project_fd(t_point **map, int row, int col, int fd);
 
+static void standart(t_fdf *param)
+{
+	mlx_clear_window(param->mlx.ptr, param->win.ptr);
+	param->map.centrx = 0;
+	param->map.centry = 0;
+	param->map.scale = 1;
+	param->map.height = 1;
+}
+
 static int deal_key(int key, void *param)
 {
-	t_mlx *mlx;
+	t_fdf	*fdf;
 
-	mlx = param;
+	fdf = param;
+	standart(fdf);
 	if (key == 53)
 	{
 		printf("exit = %d\n", key);
-		//mlx_clear_window(mlx_ptr, win_ptr);
 		exit(0);
 	}
-	if (key == 117)
-		mlx_clear_window(mlx->ptr, mlx->win.ptr);
-	printf("key = %d\n", key);
-	//mix_pixet_put(mlx_ptr, win_ptr, );
+	if (key == KEY_LEFT)
+		fdf->map.centrx = -10;
+	else if (key == KEY_RIGHT)
+		fdf->map.centrx = 10;
+	else if (key == KEY_DOWN)
+		fdf->map.centry = 10;
+	else if (key == KEY_UP)
+		fdf->map.centry = -10;
+	else if (key == KEY_EQUALS)
+		fdf->map.scale = 1.1;
+	else if (key == KEY_MINUS)
+		fdf->map.scale = 0.9;
+
+	project(&fdf->map);
+	draw_grid(fdf);
+	printf("----key--%d-----result--------\n", key);
+	ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
 	return (0);
 }
 
 static int mouse_click(int key, void *param)
 {
-	param = 0;
-	if (key)
-		;
-	//printf("mouse_click = %d", key);
-	//mix_pixet_put(mlx_ptr, win_ptr, );
+	t_fdf	*fdf;
+
+	fdf = param;
+//	standart(fdf);
+	if (key == MUSE_SCROLL_FORARD)
+		;//fdf->map.height = 1.1;
+	else if (key == MUSE_SCROLL_BACK)
+		;//fdf->map.height = 0.9;
+//	project(&fdf->map);
+//	draw_grid(fdf);
+	printf("----mouse-click--%d-----result--------\n", key);
+//	ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
 	return (0);
 }
 
@@ -51,42 +80,44 @@ static int mouse_move(int key, void *param)
 	if (key)
 		;
 //	printf("mouse move = %d\n", key);
-	//mix_pixet_put(mlx_ptr, win_ptr, );
 	return (0);
 }
 
-void fdf(t_mlx *mlx, t_line *line, t_map *map)
+void fdf(t_fdf *fdf)
 {
-	mlx->ptr = mlx_init();
-	mlx->win.width = WIDTH;
-	mlx->win.height = HEIGHT;
-	mlx->win.title = "21.fdf.mmonahan - [map]";
-	mlx->win.ptr = mlx_new_window(mlx->ptr, mlx->win.width, mlx->win.height, mlx->win.title);
+	fdf->mlx.ptr = mlx_init();
+	fdf->win.width = WIDTH;
+	fdf->win.height = HEIGHT;
+	fdf->win.title = "21.fdf.mmonahan - [map]";
+	fdf->win.ptr = mlx_new_window(fdf->mlx.ptr, fdf->win.width, fdf->win.height, fdf->win.title);
 
 	//map
-	map->centrx = (HEIGHT - map->row) / 2 + 80;	//shift сдвиги
-	map->centry =  (WIDTH - map->col) / 2 - 200;	//shift сдвиги
-	map->scale = 20;						//масштаб
-	map->height = 2.3;						//высоты
-	map->angle = ISO - 0.210;					//угол
+	fdf->map.centrx = (HEIGHT - fdf->map.row) / 2 + 80;			//shift сдвиги
+	fdf->map.centry = (WIDTH - fdf->map.col) / 2 - 200;			//shift сдвиги
+	fdf->map.scale = 20;										//масштаб
+	fdf->map.height = 1;//2.3;									//высоты
+	fdf->map.angle = ISO;// - 0.210;						//угол
 
+//	if (line->end.x)
+//		;
 	//рисуем 2D сетку
-	project(map);
-	draw_grid(mlx, line, map);
+	project(&fdf->map);
+//	draw_grid(fdf, line);
+	draw_grid(fdf);
 
 	printf("-----------result--------\n");
-	ft_put_map_project_fd(map->start_p, map->row, map->col, 1);
+	ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
 
 	//клава
-	mlx_hook(mlx->win.ptr, 2, 0, deal_key, mlx);
+	mlx_hook(fdf->win.ptr, 2, 0, deal_key, fdf);//mlx);
 
 	//мышь нажатия /4 - нажал /5 - отпустил
-	mlx_hook(mlx->win.ptr, 4, 0, mouse_click, 0);
+	mlx_hook(fdf->win.ptr, 4, 0, mouse_click, fdf);
 
 	//мышь движение
-	mlx_hook(mlx->win.ptr, 6, 0, mouse_move, 0);
+	mlx_hook(fdf->win.ptr, 6, 0, mouse_move, 0);
 
-	mlx_loop(mlx->ptr);
+	mlx_loop(fdf->mlx.ptr);
 }
 
 void	ft_put_map_project_fd(t_point **map, int row, int col, int fd)

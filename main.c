@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 19:12:41 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/12 17:18:19 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/17 15:00:09 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ static void	usage(int error)
 
 int			main(int ac, char **av)
 {
-	t_mlx	mlx;
-	t_line	line;
-	t_map	map;
+	t_fdf	fdf_s;
 
 	write(1, "Привет, сын железа!\n", 35);
 	if (ac != 2)
@@ -41,12 +39,7 @@ int			main(int ac, char **av)
 		usage(-4);
 		return (0);
 	}
-
-	input_map(av[1], &map);
-
-
-//	if (mlx.win.height || line.start.y)
-//		;
-	fdf(&mlx, &line, &map);
+	input_map(av[1], &fdf_s.map);
+	fdf(&fdf_s);
     return 0;
 }
