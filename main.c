@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 19:12:41 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/17 15:00:09 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/18 19:37:06 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			main(int ac, char **av)
 		usage(-4);
 		return (0);
 	}
-	input_map(av[1], &fdf_s.map);
+	input_map(av[1], &fdf_s);
 	fdf(&fdf_s);
     return 0;
 }

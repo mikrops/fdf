@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/17 13:56:14 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/18 19:51:18 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,31 +88,8 @@ static t_point	**fill_map_point(char *str, int y, int x)
 	return (map);
 }
 
-static t_point	**copy_map_point(t_point **start, int y, int x)
-{
-	int		i;
-	int		j;
-	t_point	**other;
 
-	i = 0;
-	j = 0;
-	other = (t_point **)ft_map_void(y, x, sizeof(t_point *), sizeof(t_point));
-	while(j < y)
-	{
-		while (i < x)
-		{
-			other[j][i].z = start[j][i].z;
-			other[j][i].x = start[j][i].x;
-			other[j][i].y = start[j][i].y;
-			i++;
-		}
-		i = 0;
-		j++;
-	}
-	return (other);
-}
-
-int	input_map(char *av, t_map *map)
+int	input_map(char *av, t_fdf *fdf)
 {
 	int		fd;
 	char	*str;
@@ -134,17 +111,20 @@ int	input_map(char *av, t_map *map)
 		j++;
 	}
 	printf("close(fd = %d) j = %d i = %d\n", close(fd), j, i);
-	map->col = i;
-	map->row = j;
+
+	initialization(fdf, av);
+	fdf->map.col = i;
+	fdf->map.row = j;
 	//пробуем структуры
-	map->start_p = fill_map_point(tmp, j, i);
-	map->other_p = copy_map_point(map->start_p, j, i);
+	fdf->map.start_p = fill_map_point(tmp, j, i);
+	fdf->map.other_p = (t_point **)ft_map_void(j, i, sizeof(t_point *), sizeof(t_point));
+//	map->other_p = copy_map_point(map->start_p, j, i);
 	//закончили со структурой
 
 	printf("-----------start_p--------\n");
-	ft_put_map_point_fd(map->start_p, j, i, 1);
-	printf("-----------other_p--------\n");
-	ft_put_map_point_fd(map->other_p, j, i, 1);
+	ft_put_map_point_fd(fdf->map.start_p, j, i, 1);
+//	printf("-----------other_p--------\n");
+//	ft_put_map_point_fd(map->other_p, j, i, 1);
 	printf("\n");
 	//free(tmp);
 	return (0);

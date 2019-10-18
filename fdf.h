@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/17 20:54:22 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/18 20:47:33 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,25 @@
 # define FT_FDF_H
 # define WIDTH 1000.0
 # define HEIGHT 1000.0
-# define ISO 0.523599
 
 /*
 **	Коды клавишь
 */
 
+# define MUSE_CLICK_LEFT 1
+# define MUSE_CLICK_RIGHT 2
+# define MUSE_SCROLL_BACK 4
+# define MUSE_SCROLL_FORARD 5
+# define KEY_EQUALS 24
+# define KEY_MINUS 27
+# define KEY_ESC 53
+# define KEY_HOME 115
+# define KEY_DELETE 117
+# define KEY_END 119
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
 # define KEY_DOWN 125
 # define KEY_UP 126
-# define KEY_EQUALS 24
-# define KEY_MINUS 27
-# define MUSE_SCROLL_BACK 4
-# define MUSE_SCROLL_FORARD 5
-
 
 # include <math.h>
 # include <stdlib.h>
@@ -108,10 +112,14 @@ typedef struct	s_fdf
 	t_map		map;
 }				t_fdf;
 
-int				input_map(char *av, t_map *map);
+int				input_map(char *av, t_fdf *fdf);
 void			put_line(t_mlx *mlx, t_window *win, t_line *line);
-void			project(t_map *map);
+void			project(t_map *map, double angle);
+void			move(t_map *map, double centrx, double centry);
+void			scale(t_map *map, double scale);
+void			altitude(t_map *map, double height);
 void			draw_grid(t_fdf *fdf);
 void			fdf(t_fdf *fdf);
+void			initialization(t_fdf *fdf, char *title);
 
 #endif

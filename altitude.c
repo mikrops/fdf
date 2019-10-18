@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   project.c                                          :+:      :+:    :+:   */
+/*   altitude.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/15 16:48:33 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/18 19:04:06 by mmonahan         ###   ########.fr       */
+/*   Created: 2019/10/18 18:35:54 by mmonahan          #+#    #+#             */
+/*   Updated: 2019/10/18 19:29:12 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void iso(double angle, double *x, double *y, double z)
-{
-	double	previous_x;
-	double	previous_y;
-
-	previous_x = *x;
-	previous_y = *y;
-	if (angle != 0.0)
-	{
-		*x = (previous_x - previous_y) * cos(angle);
-		*y = -z + (previous_x + previous_y) * sin(angle);
-	}
-}
-
-void project(t_map *map, double angle)
+void altitude(t_map *map, double height)
 {
 	int i;
 	int j;
@@ -37,8 +23,8 @@ void project(t_map *map, double angle)
 	{
 		while (i < map->col)
 		{
-			iso(angle, &map->other_p[j][i].x, &map->other_p[j][i].y,
-					map->other_p[j][i].z);
+			if (map->other_p[j][i].z != 0)
+				map->other_p[j][i].z += height;
 			i++;
 		}
 		i = 0;

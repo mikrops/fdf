@@ -77,6 +77,7 @@ add_executable(fdf main.c fdf.h
         libft/ft_isspace.c
         libft/ft_lstlen.c
         libft/ft_del.c
+        libft/ft_degtorad.c
         libft/ft_map_char.c
         libft/ft_map_int.c
         libft/ft_map_void.c
@@ -87,7 +88,7 @@ add_executable(fdf main.c fdf.h
         libft/libft.h
         get_next_line/get_next_line.c
         get_next_line/get_next_line.h
-        put_line.c input_map.c fdf.c draw_grid.c project.c)
+        put_line.c input_map.c fdf.c draw_grid.c project.c move.c scale.c altitude.c initialization.c)
 
 target_link_libraries(${PROJECT_NAME}
         "mlx"
