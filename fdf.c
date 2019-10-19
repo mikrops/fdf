@@ -6,34 +6,13 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:07:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/19 15:03:54 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/19 21:04:04 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 void	ft_put_map_project_fd(t_point **map, int row, int col, int fd);
-
-void	copy_map_point(t_map *map)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while(j < map->row)
-	{
-		while (i < map->col)
-		{
-				map->other_p[j][i].x = map->start_p[j][i].x;
-				map->other_p[j][i].y = map->start_p[j][i].y;
-				map->other_p[j][i].z = map->start_p[j][i].z;
-			i++;
-		}
-		i = 0;
-		j++;
-	}
-}
 
 static int deal_key(int key, void *param)
 {
@@ -47,11 +26,13 @@ static int deal_key(int key, void *param)
 	{
 		fdf->map.height = 0;
 		fdf->map.scale = 20;
+		fdf->map.rotationx = ft_degtorad(0);
+		fdf->map.rotationy = ft_degtorad(0);
+		fdf->map.rotationz = ft_degtorad(0);
+		fdf->map.angle = ft_degtorad(0);
 	}
 	else if (key == KEY_ENTER) // центрирование
-	{
 		;
-	}
 	else if (key == KEY_LEFT)
 		fdf->map.centrx += -10.0;
 	else if (key == KEY_RIGHT)
@@ -64,21 +45,33 @@ static int deal_key(int key, void *param)
 		fdf->map.height += 0.1;
 	else if (key == KEY_MINUS)
 		fdf->map.height -= 0.1;
+	else if (key == KEY_END) // поворот x
+		fdf->map.rotationx += ft_degtorad(5);
+	else if (key == KEY_HOME) // поворот x
+		fdf->map.rotationx -= ft_degtorad(5);
+	else if (key == KEY_BACK_SPASE ) // поворот y
+		fdf->map.rotationy += ft_degtorad(5);
+	else if (key == KEY_SPASE) // поворот y
+		fdf->map.rotationy -= ft_degtorad(5);
+	else if (key == KEY_PAGE_DOWN) // поворот z
+		fdf->map.rotationz += ft_degtorad(5);
+	else if (key == KEY_PAGE_UP) // поворот z
+		fdf->map.rotationz -= ft_degtorad(5);
 	else if (key == KEY_ONE) // изометрия 0
 		fdf->map.angle = ft_degtorad(0);
 	else if (key == KEY_TWO) // изометрия 30
 		fdf->map.angle = ft_degtorad(30);
-	else if (key == KEY_Y) // изометрия 30
+	else if (key == KEY_Y) // изометрия -1
 		fdf->map.angle -= ft_degtorad(1);
-	else if (key == KEY_T) // изометрия 30
+	else if (key == KEY_T) // изометрия +1
 		fdf->map.angle += ft_degtorad(1);
-
-	copy_map_point(&fdf->map);
-	altitude(&fdf->map, fdf->map.height);
-	scale(&fdf->map, fdf->map.scale);
-	project(&fdf->map, fdf->map.angle);
-	move(&fdf->map, fdf->map.centrx, fdf->map.centry);
-
+	else
+	{
+		info(fdf, 0);
+		//return (0);
+	}
+	calculation(&fdf->map);
+	info(fdf, 1);
 	draw_grid(fdf);
 
 	printf("----key--%d-----result--------\n", key);
@@ -86,55 +79,54 @@ static int deal_key(int key, void *param)
 	return (0);
 }
 
-static int mouse_click(int key, int x, int y, void *param)
+static int mouse_click(int key, int m_x, int m_y, void *param)
 {
 	t_fdf	*fdf;
 
 	fdf = param;
+	fdf->win.mouse_x = m_x;
+	fdf->win.mouse_y = m_y;
 	mlx_clear_window(fdf->mlx.ptr, fdf->win.ptr);
 	if (key == MUSE_SCROLL_BACK)
 		fdf->map.scale += 1;
 	else if (key == MUSE_SCROLL_FORARD)
+	{
 		if (fdf->map.scale)
 			fdf->map.scale -= 1;
-
-	copy_map_point(&fdf->map);
-	altitude(&fdf->map, fdf->map.height);
-	scale(&fdf->map, fdf->map.scale);
-	project(&fdf->map, fdf->map.angle);
-	move(&fdf->map, fdf->map.centrx, fdf->map.centry);
-
+	}
+	else
+	{
+		info(fdf, 0);
+		return (0);
+	}
+	calculation(&fdf->map);
+	info(fdf, 1);
 	draw_grid(fdf);
 
-	printf("----mouse_click--%d--y%d-x%d--result--------\n", key, x, y);
+	printf("----mouse_click--%d--x%d-y%d--result--------\n", key, m_x, m_y);
 	ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
 	return (0);
 }
 
-static int mouse_move(int key, int x, int y, void *param)
-{
-	t_fdf	*fdf;
-
-	fdf = param;
-	if (key || x || y)
-		;
-//	printf("----mouse_move--%d--y%d-x%d--result--------\n", key, x, y);
-	return (0);
-}
+//static int mouse_move(int key, int x, int y, void *param)
+//{
+//	t_fdf	*fdf;
+//
+//	fdf = param;
+////	fdf->map.x = x;
+////	fdf->map.y = y;
+////	info(fdf);
+//	if (key || x || y)
+//		;
+//	printf("----mouse_move-x%d--y%d-key%d--result--------\n", key, x, y);
+//	return (0);
+//}
 
 void fdf(t_fdf *fdf)
 {
-	copy_map_point(&fdf->map);
-
-	//рисуем 2D сетку
-	altitude(&fdf->map, fdf->map.height);
-	scale(&fdf->map, fdf->map.scale);
-	move(&fdf->map, fdf->map.centrx, fdf->map.centry);
-	project(&fdf->map, ft_degtorad(0));
-	draw_grid(fdf);
-
-	// информация
-	mlx_string_put(fdf->mlx.ptr, fdf->win.ptr, 50, 50, 1934675, "hello");
+	calculation(&fdf->map);
+	info(fdf, 0);
+	//draw_grid(fdf);
 
 	printf("-----------result--------\n");
 	ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
@@ -144,7 +136,7 @@ void fdf(t_fdf *fdf)
 	//мышь нажатия /4 - нажал /5 - отпустил
 	mlx_hook(fdf->win.ptr, 4, 0, mouse_click, fdf);
 	//мышь движение
-	mlx_hook(fdf->win.ptr, 6, 0, mouse_move, fdf);
+	//mlx_hook(fdf->win.ptr, 6, 0, mouse_move, fdf);
 
 	mlx_loop(fdf->mlx.ptr);
 }

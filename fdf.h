@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/19 14:07:43 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/19 20:48:52 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,15 @@
 # define KEY_TWO 19
 # define KEY_EQUALS 24
 # define KEY_MINUS 27
-# define KEY_END 36
+# define KEY_BACK_SPASE 49
+# define KEY_SPASE 51
 # define KEY_ESC 53
 # define KEY_HOME 115
+# define KEY_PAGE_UP 116
 # define KEY_DELETE 117
 # define KEY_ENTER 118
+# define KEY_END 119
+# define KEY_PAGE_DOWN 121
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
 # define KEY_DOWN 125
@@ -89,7 +93,10 @@ typedef struct	s_window
 	void		*ptr;
 	int			width;
 	int			height;
+	int			mouse_x;
+	int 		mouse_y;
 	char 		*title;
+	char 		*name;
 }				t_window;
 
 typedef struct  s_mlx
@@ -99,6 +106,9 @@ typedef struct  s_mlx
 
 typedef struct	s_map
 {
+	double		rotationx;
+	double		rotationy;
+	double		rotationz;
 	int			row;
 	int 		col;
 	double		centry;
@@ -106,6 +116,7 @@ typedef struct	s_map
 	double		scale;
 	double		height;
 	double		angle;
+
 	t_point		**start_p;
 	t_point		**other_p;
 }				t_map;
@@ -117,14 +128,12 @@ typedef struct	s_fdf
 	t_map		map;
 }				t_fdf;
 
-int				input_map(char *av, t_fdf *fdf);
 void			put_line(t_mlx *mlx, t_window *win, t_line *line);
-void			project(t_map *map, double angle);
-void			move(t_map *map, double centrx, double centry);
-void			scale(t_map *map, double scale);
-void			altitude(t_map *map, double height);
 void			draw_grid(t_fdf *fdf);
+void			info(t_fdf *fdf, int check);
+void			calculation(t_map *map);
 void			fdf(t_fdf *fdf);
-void			initialization(t_fdf *fdf, char *title);
+void			initialization(t_fdf *fdf, char *name);
+int				input_map(char *av, t_fdf *fdf);
 
 #endif
