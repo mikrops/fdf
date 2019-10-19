@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:07:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/18 21:00:39 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/19 11:30:39 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,40 +46,40 @@ static int deal_key(int key, void *param)
 	mlx_clear_window(fdf->mlx.ptr, fdf->win.ptr);
 	if (key == KEY_ESC)
 		exit(0);
-	else if (key == KEY_DELETE)
+	else if (key == KEY_DELETE) //сетка изометрия 0
 	{
 		copy_map_point(&fdf->map, 1, 1, 1);
-		altitude(&fdf->map, fdf->map.height);
-		scale(&fdf->map, fdf->map.scale);
-		move(&fdf->map, fdf->map.centrx, fdf->map.centry);
+//		altitude(&fdf->map, fdf->map.height);
+//		scale(&fdf->map, fdf->map.scale);
+//		move(&fdf->map, fdf->map.centrx, fdf->map.centry);
+		fdf->map.angle = ft_degtorad(0);
 	}
 	else if (key == KEY_LEFT)
-		move(&fdf->map, -10.0, 0.0);
+		fdf->map.centrx += -10.0;
 	else if (key == KEY_RIGHT)
-		move(&fdf->map, 10.0, 0.0);
+		fdf->map.centrx += 10.0;
 	else if (key == KEY_DOWN)
-		move(&fdf->map, 0.0, 10.0);
+		fdf->map.centry += 10.0;
 	else if (key == KEY_UP)
-		move(&fdf->map, 0.0, -10.0);
+		fdf->map.centry += -10.0;
 	else if (key == KEY_EQUALS)
 	{
-		copy_map_point(&fdf->map, 1, 1, 0);
-		altitude(&fdf->map, fdf->map.height);
-		scale(&fdf->map, fdf->map.scale);
-		move(&fdf->map, fdf->map.centrx, fdf->map.centry);
-		altitude(&fdf->map, 1);
+		fdf->map.height += 1;
 	}
 	else if (key == KEY_MINUS)
-		altitude(&fdf->map, -1);
-	else if (key == KEY_HOME)
 	{
-		project(&fdf->map, ft_degtorad(30));
+		fdf->map.height -= 1;
 	}
-	else if (key == KEY_END)
+	else if (key == KEY_HOME) // изометрия 30
 	{
-		project(&fdf->map, ft_degtorad(0));
+		fdf->map.angle = ft_degtorad(30);
 	}
-	project(&fdf->map, ft_degtorad(0));
+	copy_map_point(&fdf->map, 1, 1, 0);
+	altitude(&fdf->map, fdf->map.height);
+	scale(&fdf->map, fdf->map.scale);
+	project(&fdf->map, fdf->map.angle);
+	move(&fdf->map, fdf->map.centrx, fdf->map.centry);
+
 	draw_grid(fdf);
 
 	printf("----key--%d-----result--------\n", key);
