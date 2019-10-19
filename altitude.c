@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:35:54 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/19 11:34:56 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/19 13:39:39 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,17 @@ void altitude(t_map *map, double height)
 
 	i = 0;
 	j = 0;
+
 	while (j < map->row)
 	{
 		while (i < map->col)
 		{
+
 			if (map->other_p[j][i].z > 0)
-				map->other_p[j][i].z += height;
+			{
+				map->other_p[j][i].z = map->start_p[j][i].z + height;
+//				map->other_p[j][i].z += height;
+			}
 //			if (map->other_p[j][i].z < 0)
 //				map->other_p[j][i].z -= height;
 
