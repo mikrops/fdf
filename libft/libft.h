@@ -146,5 +146,5 @@ int					ft_pow(int number, int pow);
 int					ft_atoi_base(char *str, int base);
 void				**ft_map_void(int row, int col, size_t size_row,
 					size_t size_col);
-double 				ft_degtorad(double degree);
+double				ft_degtorad(double degree);
 #endif

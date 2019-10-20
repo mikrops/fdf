@@ -19,4 +19,3 @@ double	ft_degtorad(double degree)
 	pi = 3.14159265358979323846;
 	return (degree * (pi / 180));
 }
-

@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/20 04:08:30 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/20 11:42:30 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ static int count_digit(char *str)
 	return (count);
 }
 
+int	color_len(char *color)
+{
+	int	length;
+
+	length = 0;
+	while (ft_isdigit(color[length]) || ft_isalpha(color[length]))
+		length++;
+	return (length);
+}
+
 /*
 **	Заполнение двумерного массива типа структура point
  */
@@ -52,7 +62,6 @@ static t_point	**fill_map_point(char *str, int y, int x)
 	int		i;
 	int		j;
 	t_point	**map;
-	char	*tmp;
 
 	i = 0;
 	j = 0;
@@ -69,12 +78,8 @@ static t_point	**fill_map_point(char *str, int y, int x)
 				map[j][i].y = (j + 1);
 				if (*str == ',')
 				{
-					//ИСПРАВИТЬ!!! длина цвета не фексированна!!!
-					str++;
-					tmp = str;
-					tmp[8] = '\0';
-					map[j][i].color = ft_atoi_base(tmp, 16);
-					str += 9;
+					map[j][i].color = ft_atoi_base(++str, 16);
+					str += color_len(str);
 				}
 				i++;
 			}
@@ -124,8 +129,6 @@ int	input_map(char *av, t_fdf *fdf)
 
 	printf("-----------start_p--------\n");
 	ft_put_map_point_fd(fdf->map.start_p, j, i, 1);
-//	printf("-----------other_p--------\n");
-//	ft_put_map_point_fd(map->other_p, j, i, 1);
 	printf("\n");
 	//free(tmp);
 	return (0);

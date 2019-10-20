@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:07:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/20 05:49:59 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/20 11:32:10 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ static int deal_key(int key, void *param)
 	}
 	else if (key == KEY_ENTER) // центрирование
 	{
-		fdf->map.centr_x = (HEIGHT - fdf->map.row) / 2;
-		fdf->map.centr_y = (WIDTH - fdf->map.col) / 2;
+		fdf->map.centr_x = (WIDTH - fdf->map.col) / 2 + 13.5;
+		fdf->map.centr_y = (HEIGHT - fdf->map.row) / 2 + 17;
+//		printf("\n----KEY - centr%f - %f\n-----", fdf->map.centr_x, fdf->map.centr_y);
 	}
 	else if (key == KEY_LEFT)
 		fdf->map.centr_x += -10.0;
@@ -138,7 +139,6 @@ void fdf(t_fdf *fdf)
 {
 	calculation(&fdf->map);
 	info(fdf, 0);
-	//draw_grid(fdf);
 
 	printf("-----------result--------\n");
 	ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);

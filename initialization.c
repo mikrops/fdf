@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:10:27 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/20 06:08:19 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/20 07:00:44 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 void	init_map(t_map *map)
 {
-	map->centr_x = (HEIGHT - map->row) / 2;				//shift сдвиги
-	map->centr_y = (WIDTH - map->col) / 2;				//shift сдвиги
+	map->centr_x = (WIDTH - map->col) / 2;				//shift сдвиги
+	map->centr_y = (HEIGHT - map->row) / 2;				//shift сдвиги
 	map->scale = 20;									//масштаб
 	map->height = 0;									//высоты
 	map->rotation_x = ft_degtorad(0);			//угол x
 	map->rotation_y = ft_degtorad(0);			//угол y
 	map->rotation_z = ft_degtorad(0);			//угол z
 	map->angle = ft_degtorad(0);				//угол iso
+//	printf("\n----init - centr%f - %f\n-----", map->centr_x, map->centr_y);
 }
 
 void	initialization(t_fdf *fdf, char *name)

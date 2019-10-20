@@ -6,14 +6,14 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/20 06:08:19 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/20 11:51:08 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_FDF_H
 # define FT_FDF_H
-# define WIDTH 1000.0
-# define HEIGHT 1000.0
+# define WIDTH 2300.0
+# define HEIGHT 800.0
 
 /*
 **	Коды клавишь
@@ -57,14 +57,12 @@
 **	Минимум, максимум и шаг расчетных переменных
 */
 
-# define MIN_SCALE 5
+# define MIN_SCALE 1
 # define MAX_SCALE 50
 # define STEP_SCALE 1
 # define MIN_HEIGTN -35
 # define MAX_HEIGTN 20
 # define STEP_HEIGTN 1
-
-
 
 # include <math.h>
 # include <stdlib.h>
@@ -74,13 +72,13 @@
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
 
-//typedef struct		s_color
-//{
-//	unsigned char	red;
-//	unsigned char	green;
-//	unsigned char	blue;
-//	float			brightness;
-//}					t_color;
+typedef struct		s_color
+{
+	unsigned char	red;
+	unsigned char	green;
+	unsigned char	blue;
+	float			brightness;
+}					t_color;
 
 typedef struct	s_point
 {
@@ -88,7 +86,7 @@ typedef struct	s_point
 	double		y;
 	double		z;
 	int 		color;
-	//t_color		_color;
+	t_color		_color;
 }				t_point;
 
 typedef struct	s_line
