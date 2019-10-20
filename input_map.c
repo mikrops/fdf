@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/18 19:51:18 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/20 04:08:30 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	input_map(char *av, t_fdf *fdf)
 	initialization(fdf, av);
 	fdf->map.col = i;
 	fdf->map.row = j;
+	fdf->map.plato = 0;
 	//пробуем структуры
 	fdf->map.start_p = fill_map_point(tmp, j, i);
 	fdf->map.other_p = (t_point **)ft_map_void(j, i, sizeof(t_point *), sizeof(t_point));

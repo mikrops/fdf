@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:07:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/19 21:04:04 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/20 05:49:59 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,48 @@ static int deal_key(int key, void *param)
 		exit(0);
 	else if (key == KEY_DELETE) //сетка изометрия 0
 	{
-		fdf->map.height = 0;
 		fdf->map.scale = 20;
-		fdf->map.rotationx = ft_degtorad(0);
-		fdf->map.rotationy = ft_degtorad(0);
-		fdf->map.rotationz = ft_degtorad(0);
+		fdf->map.height = 0;
+		fdf->map.rotation_x = ft_degtorad(0);
+		fdf->map.rotation_y = ft_degtorad(0);
+		fdf->map.rotation_z = ft_degtorad(0);
 		fdf->map.angle = ft_degtorad(0);
 	}
 	else if (key == KEY_ENTER) // центрирование
-		;
+	{
+		fdf->map.centr_x = (HEIGHT - fdf->map.row) / 2;
+		fdf->map.centr_y = (WIDTH - fdf->map.col) / 2;
+	}
 	else if (key == KEY_LEFT)
-		fdf->map.centrx += -10.0;
+		fdf->map.centr_x += -10.0;
 	else if (key == KEY_RIGHT)
-		fdf->map.centrx += 10.0;
+		fdf->map.centr_x += 10.0;
 	else if (key == KEY_DOWN)
-		fdf->map.centry += 10.0;
+		fdf->map.centr_y += 10.0;
 	else if (key == KEY_UP)
-		fdf->map.centry += -10.0;
+		fdf->map.centr_y += -10.0;
 	else if (key == KEY_EQUALS)
-		fdf->map.height += 0.1;
+	{
+		if (fdf->map.height < MAX_HEIGTN)
+			fdf->map.height += STEP_HEIGTN;
+	}
 	else if (key == KEY_MINUS)
-		fdf->map.height -= 0.1;
+	{
+		if (fdf->map.height > MIN_HEIGTN)
+			fdf->map.height -= STEP_HEIGTN;
+	}
 	else if (key == KEY_END) // поворот x
-		fdf->map.rotationx += ft_degtorad(5);
+		fdf->map.rotation_x += ft_degtorad(5);
 	else if (key == KEY_HOME) // поворот x
-		fdf->map.rotationx -= ft_degtorad(5);
+		fdf->map.rotation_x -= ft_degtorad(5);
 	else if (key == KEY_BACK_SPASE ) // поворот y
-		fdf->map.rotationy += ft_degtorad(5);
+		fdf->map.rotation_y += ft_degtorad(5);
 	else if (key == KEY_SPASE) // поворот y
-		fdf->map.rotationy -= ft_degtorad(5);
+		fdf->map.rotation_y -= ft_degtorad(5);
 	else if (key == KEY_PAGE_DOWN) // поворот z
-		fdf->map.rotationz += ft_degtorad(5);
+		fdf->map.rotation_z += ft_degtorad(5);
 	else if (key == KEY_PAGE_UP) // поворот z
-		fdf->map.rotationz -= ft_degtorad(5);
+		fdf->map.rotation_z -= ft_degtorad(5);
 	else if (key == KEY_ONE) // изометрия 0
 		fdf->map.angle = ft_degtorad(0);
 	else if (key == KEY_TWO) // изометрия 30
@@ -68,7 +77,7 @@ static int deal_key(int key, void *param)
 	else
 	{
 		info(fdf, 0);
-		//return (0);
+		return (0);
 	}
 	calculation(&fdf->map);
 	info(fdf, 1);
@@ -87,12 +96,15 @@ static int mouse_click(int key, int m_x, int m_y, void *param)
 	fdf->win.mouse_x = m_x;
 	fdf->win.mouse_y = m_y;
 	mlx_clear_window(fdf->mlx.ptr, fdf->win.ptr);
-	if (key == MUSE_SCROLL_BACK)
-		fdf->map.scale += 1;
-	else if (key == MUSE_SCROLL_FORARD)
+	if (key == MOUSE_SCROLL_BACKWARD)
 	{
-		if (fdf->map.scale)
-			fdf->map.scale -= 1;
+		if (fdf->map.scale < MAX_SCALE)
+			fdf->map.scale += STEP_SCALE;
+	}
+	else if (key == MOUSE_SCROLL_FORWARD)
+	{
+		if (fdf->map.scale > MIN_SCALE)
+			fdf->map.scale -= STEP_SCALE;
 	}
 	else
 	{

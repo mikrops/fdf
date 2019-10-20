@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/19 20:48:52 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/20 06:08:19 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,50 @@
 
 # define MUSE_CLICK_LEFT 1
 # define MUSE_CLICK_RIGHT 2
-# define MUSE_SCROLL_BACK 4
-# define MUSE_SCROLL_FORARD 5
+# define MOUSE_SCROLL_BACKWARD 4
+# define MOUSE_SCROLL_FORWARD 5
 # define KEY_Y 16
 # define KEY_T 17
 # define KEY_ONE 18
 # define KEY_TWO 19
 # define KEY_EQUALS 24
 # define KEY_MINUS 27
+# define KEY_ENTER 36
 # define KEY_BACK_SPASE 49
 # define KEY_SPASE 51
 # define KEY_ESC 53
 # define KEY_HOME 115
 # define KEY_PAGE_UP 116
 # define KEY_DELETE 117
-# define KEY_ENTER 118
 # define KEY_END 119
 # define KEY_PAGE_DOWN 121
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
 # define KEY_DOWN 125
 # define KEY_UP 126
+
+/*
+**	Коды клавишь
+**	https://www.color-hex.com/color-names.html
+*/
+
+# define GREEN 0x32CD32
+# define RED 0xff0000
+# define PALE 0xafeeee
+# define AQUAMARINE 0x66cdaa
+
+/*
+**	Минимум, максимум и шаг расчетных переменных
+*/
+
+# define MIN_SCALE 5
+# define MAX_SCALE 50
+# define STEP_SCALE 1
+# define MIN_HEIGTN -35
+# define MAX_HEIGTN 20
+# define STEP_HEIGTN 1
+
+
 
 # include <math.h>
 # include <stdlib.h>
@@ -106,17 +129,19 @@ typedef struct  s_mlx
 
 typedef struct	s_map
 {
-	double		rotationx;
-	double		rotationy;
-	double		rotationz;
-	int			row;
-	int 		col;
-	double		centry;
-	double		centrx;
+	double		rotation_x;
+	double		rotation_y;
+	double		rotation_z;
+	double		centr_y;
+	double		centr_x;
+	double		shift_x;
+	double		shift_y;
 	double		scale;
 	double		height;
 	double		angle;
-
+	int 		plato;
+	int			row;
+	int 		col;
 	t_point		**start_p;
 	t_point		**other_p;
 }				t_map;

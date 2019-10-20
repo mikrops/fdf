@@ -6,99 +6,56 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:31:07 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/19 20:30:04 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/20 06:10:06 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void rotation_x(double angle, double *x, double *y, double *z)
+void	rotation(t_map *map, t_point *point)
 {
-	double	previous_x;
-	double	previous_y;
-	double	previous_z;
+	double	prev_x;
+	double	prev_y;
+	double	prev_z;
 
-	previous_x = *x;
-	previous_y = *y;
-	previous_z = *z;
-	if (angle != 0.0)
-	{
-//		*y = previous_y * cos(angle) + previous_z * sin(angle);
-//		*x = -previous_y * sin(angle) + previous_z * cos(angle);
-		*y = previous_y * cos(angle) + previous_z * sin(angle);
-		*z = previous_y * -sin(angle) + previous_z * cos(angle);
-	}
-}
-void rotation_y(double angle, double *x, double *y, double *z)
-{
-	double	previous_x;
-	double	previous_y;
-	double	previous_z;
-
-	previous_x = *x;
-	previous_y = *y;
-	previous_z = *z;
-	//if (angle != 0.0)
-	{
-//		*x = previous_x * cos(angle) + previous_z * sin(angle);
-//		*z = -previous_x * sin(angle) + previous_z * cos(angle);
-		*x = previous_x * cos(angle) + previous_z * sin(angle);
-		*z = -previous_x * sin(angle) + previous_z * cos(angle);
-	}
-}
-void rotation_z(double angle, double *x, double *y, double *z)
-{
-	double	previous_x;
-	double	previous_y;
-	double	previous_z;
-
-	previous_x = *x;
-	previous_y = *y;
-	previous_z = *z;
-	//if (angle != 0.0)
-	{
-//		*x = previous_x * cos(angle) - previous_y * sin(angle);
-//		*y = previous_x * sin(angle) + previous_y * sin(angle);
-		*x = previous_x * cos(angle) - previous_y * sin(angle);
-		*y = previous_x * sin(angle) + previous_y * cos(angle);
-	}
+	prev_y = point->y;
+	prev_z = point->z;
+	point->y = prev_y * cos(map->rotation_x) + prev_z * sin(map->rotation_x);
+	point->z = prev_y * -sin(map->rotation_x) + prev_z * cos(map->rotation_x);
+	prev_x = point->x;
+	prev_z = point->z;
+	point->x = prev_x * cos(map->rotation_y) + prev_z * sin(map->rotation_y);
+	point->z = -prev_x * sin(map->rotation_y) + prev_z * cos(map->rotation_y);
+	prev_x = point->x;
+	prev_y = point->y;
+	point->x = prev_x * cos(map->rotation_z) - prev_y * sin(map->rotation_z);
+	point->y = prev_x * sin(map->rotation_z) + prev_y * cos(map->rotation_z);
 }
 
-void	iso(double angle, double *x, double *y, double z)
+void	iso(double angle, t_point *point)
 {
 	double	previous_x;
 	double	previous_y;
 	double 	radian;
 
-	previous_x = *x;
-	previous_y = *y;
+	previous_x = point->x;
+	previous_y = point->y;
 	radian = ft_degtorad(angle);
 	if (angle != 0.0)
 	{
-		*x = (previous_x - previous_y) * cos(angle);
-		*y = -z + (previous_x + previous_y) * sin(angle);
+		point->x = (previous_x - previous_y) * cos(angle);
+		point->y = -point->z + (previous_x + previous_y) * sin(angle);
 	}
 }
 
-void	copy_map_point(t_map *map)
+void	scale(t_map *map, t_point *point, int i, int j)
 {
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while(j < map->row)
-	{
-		while (i < map->col)
-		{
-			map->other_p[j][i].x = map->start_p[j][i].x;
-			map->other_p[j][i].y = map->start_p[j][i].y;
-			map->other_p[j][i].z = map->start_p[j][i].z;
-			i++;
-		}
-		i = 0;
-		j++;
-	}
+	map->other_p[j][i].x = map->scale * i - map->col * map->scale / 2;
+	map->other_p[j][i].y = map->scale * j - map->row * map->scale / 2;
+	if (point->z > map->plato)
+		point->z = (point->z + map->height) * map->scale;
+	else if (point->z < map->plato)
+		point->z = (point->z - map->height) * map->scale;
 }
 
 void	calculation(t_map *map)
@@ -108,30 +65,19 @@ void	calculation(t_map *map)
 
 	i = 0;
 	j = 0;
-	copy_map_point(map);
 	while (j < map->row)
 	{
 		while (i < map->col)
 		{
-			if (map->other_p[j][i].z != 0)
-				map->other_p[j][i].z = map->start_p[j][i].z + map->height;
-			map->other_p[j][i].x *= map->scale;
-			map->other_p[j][i].y *= map->scale;
-			map->other_p[j][i].z *= map->scale;
-			rotation_x(map->rotationx, &map->other_p[j][i].x, &map->other_p[j][i].y,
-					   &map->other_p[j][i].z);
-			rotation_y(map->rotationy, &map->other_p[j][i].x, &map->other_p[j][i].y,
-					   &map->other_p[j][i].z);
-			rotation_z(map->rotationz, &map->other_p[j][i].x, &map->other_p[j][i].y,
-					   &map->other_p[j][i].z);
-			iso(map->angle, &map->other_p[j][i].x, &map->other_p[j][i].y,
-				map->other_p[j][i].z);
-			map->other_p[j][i].x += map->centrx;
-			map->other_p[j][i].y += map->centry;
+			map->other_p[j][i] = map->start_p[j][i];
+			scale(map, &map->other_p[j][i], i , j);
+			rotation(map, &map->other_p[j][i]);
+			iso(map->angle, &map->other_p[j][i]);
+			map->other_p[j][i].x += map->centr_x;
+			map->other_p[j][i].y += map->centr_y;
 			i++;
 		}
 		i = 0;
 		j++;
 	}
 }
-
