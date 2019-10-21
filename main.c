@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 19:12:41 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/21 18:18:34 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/21 19:20:08 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 static void	usage(int error)
 {
 	if (error == -1)
-		write(2, "Ошибка -1. Пустой файл\n", 22);
+		write(2, "Ошибка -1. Пустой файл\n", 39);
 	else if (error == -2)
-		write(2, "Ошибка -2. Некорректный файл\n", 34);
+		write(2, "Ошибка -2. Некорректный файл\n", 51);
 	else if (error == -3)
-		write(2, "Ошибка -3. Usage: ./fdf [name_file.fdf]\n", 29);
+		write(2, "Ошибка -3. Отсутвтует файл\n", 47);
 	else if (error == -4)
-		write(2, "Ошибка -4. Неполный файл. По возможности заполнено нулями\n", 106);
+		write(2, "Ошибка -4. Неполный файл. По возможности заполнено нулями\n", 104);
+	else if (error == -5)
+		write(2, "Usage: ./fdf [name_file.fdf]\n", 29);
 	else
 		write(2, "Error\n", 6);
 }
@@ -31,16 +33,16 @@ int			main(int ac, char **av)
 	t_fdf	fdf_s;
 	int		validation;
 
-	write(1, "Привет, сын железа!\n", 35);
-	if (ac != 2)
+	if (ac == 2)
 	{
-		usage(-4);
-		return (0);
+		write(1, "Привет, сын железа!\n", 35);
+		validation = input_map(av[1], &fdf_s);
+		if (validation == 0)
+			fdf(&fdf_s);
+		else
+			usage(validation);
 	}
-	validation = input_map(av[1], &fdf_s);
-	if (validation == 0)
-		fdf(&fdf_s);
 	else
-		usage(validation);
+		usage(-3);
     return 0;
 }

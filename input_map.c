@@ -6,13 +6,27 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/21 17:34:30 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/21 19:51:29 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 static void	ft_put_map_point_fd(t_point **map, int row, int col, int fd);
+
+/*
+**	Возвращает длину значения числа в шестадцатиричной системе
+*/
+
+static int	hexlen(char *color)
+{
+	int	length;
+
+	length = 0;
+	while (ft_isdigit(color[length]) || ft_isalpha(color[length]))
+		length++;
+	return (length);
+}
 
 /*
 **	Возвращает количество чисел в строке, игнорируя цвет
@@ -36,25 +50,11 @@ static int count_digit(char *str)
 			count++;
 		}
 		else if (str[i] == ',')
-			i += 10;
+			i += hexlen(&str[i]) + 1;
 		else
 			i++;
 	}
 	return (count);
-}
-
-/*
-**	Возвращает длину значения числа в шестадцатиричной системе
-*/
-
-static int	hexlen(char *color)
-{
-	int	length;
-
-	length = 0;
-	while (ft_isdigit(color[length]) || ft_isalpha(color[length]))
-		length++;
-	return (length);
 }
 
 /*
@@ -105,6 +105,8 @@ int	input_map(char *av, t_fdf *fdf)
 	int		fd;
 	char	*str;
 	char 	*tmp;
+	// можно использовать из map .col и .row,
+	// но тогда надо иниг запускать раньше цыкла или передавать tmp в структуру
 	int 	i;
 	int 	j;
 
@@ -112,7 +114,7 @@ int	input_map(char *av, t_fdf *fdf)
 	i = 0;
 	j = 0;
 	tmp = "";
-	printf("open(fd = %d)\n", fd);
+//	printf("open(fd = %d)\n", fd);
 	while (get_next_line(fd, &str))
 	{
 		i = count_digit(str);
@@ -121,18 +123,15 @@ int	input_map(char *av, t_fdf *fdf)
 		tmp = ft_strjoin(tmp, "\n");	//!!!!!исправить ft_strjoin!!!!!!!!
 		j++;
 	}
-	printf("close(fd = %d) j = %d i = %d\n", close(fd), j, i);
-
+//	printf("close(fd = %d) j = %d i = %d\n", close(fd), j, i);
+// киевская шубенский переулок
 	initialization(fdf, av);
 	fdf->map.col = i;
 	fdf->map.row = j;
 	fdf->map.plato = 0;
-	//пробуем структуры
 	fdf->map.start_p = fill_map_point(tmp, j, i);
 	fdf->map.other_p = (t_point **)ft_map_void(j, i, sizeof(t_point *), sizeof(t_point));
 //	map->other_p = copy_map_point(map->start_p, j, i);
-	//закончили со структурой
-
 	printf("-----------start_p--------\n");
 	ft_put_map_point_fd(fdf->map.start_p, j, i, 1);
 	printf("\n");
@@ -145,8 +144,9 @@ int	input_map(char *av, t_fdf *fdf)
 **	----------------------------------
 **	пустая			|	-1
 **	некорректная	|	-2
-**	отсутствие		|	-3
+**	отсутствие ф.	|	-3
 **	неполная		|	-4 предложить действия(дориосвать или выйти)
+**	отсутвие пар.	|	-5
 **					|
 **	----------------------------------
 **
