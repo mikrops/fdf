@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/20 11:42:30 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/21 17:34:30 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ static int count_digit(char *str)
 	return (count);
 }
 
-int	color_len(char *color)
+/*
+**	Возвращает длину значения числа в шестадцатиричной системе
+*/
+
+static int	hexlen(char *color)
 {
 	int	length;
 
@@ -55,7 +59,7 @@ int	color_len(char *color)
 
 /*
 **	Заполнение двумерного массива типа структура point
- */
+*/
 
 static t_point	**fill_map_point(char *str, int y, int x)
 {
@@ -66,6 +70,8 @@ static t_point	**fill_map_point(char *str, int y, int x)
 	i = 0;
 	j = 0;
 	map = (t_point **)ft_map_void(y, x, sizeof(t_point *), sizeof(t_point));
+	if (!map)
+		ft_map_void_del((void **)map, y);
 	while(j < y)
 	{
 		while (*str != '\n')
@@ -79,7 +85,7 @@ static t_point	**fill_map_point(char *str, int y, int x)
 				if (*str == ',')
 				{
 					map[j][i].color = ft_atoi_base(++str, 16);
-					str += color_len(str);
+					str += hexlen(str);
 				}
 				i++;
 			}
@@ -138,9 +144,9 @@ int	input_map(char *av, t_fdf *fdf)
 **	ошибки карты	|	решения
 **	----------------------------------
 **	пустая			|	-1
-**	неполная		|	-2 предложить действия(дориосвать или выйти)
-**	некорректная	|	-3
-**	отсутствие		|	-4
+**	некорректная	|	-2
+**	отсутствие		|	-3
+**	неполная		|	-4 предложить действия(дориосвать или выйти)
 **					|
 **	----------------------------------
 **

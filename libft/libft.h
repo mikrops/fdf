@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 21:16:18 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/18 13:57:55 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/21 17:23:28 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,6 @@ int					ft_pow(int number, int pow);
 int					ft_atoi_base(char *str, int base);
 void				**ft_map_void(int row, int col, size_t size_row,
 					size_t size_col);
+void				ft_map_void_del(void **map, size_t row);
 double				ft_degtorad(double degree);
 #endif

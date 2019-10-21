@@ -36,11 +36,9 @@ void	iso(double angle, t_point *point)
 {
 	double	previous_x;
 	double	previous_y;
-	double 	radian;
 
 	previous_x = point->x;
 	previous_y = point->y;
-	radian = ft_degtorad(angle);
 	if (angle != 0.0)
 	{
 		point->x = (previous_x - previous_y) * cos(angle);

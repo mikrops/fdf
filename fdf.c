@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:07:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/20 11:32:10 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/21 17:42:15 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static int deal_key(int key, void *param)
 		if (fdf->map.height > MIN_HEIGTN)
 			fdf->map.height -= STEP_HEIGTN;
 	}
-	else if (key == KEY_END) // поворот x
-		fdf->map.rotation_x += ft_degtorad(5);
 	else if (key == KEY_HOME) // поворот x
+		fdf->map.rotation_x += ft_degtorad(5);
+	else if (key == KEY_PAGE_UP) // поворот x
 		fdf->map.rotation_x -= ft_degtorad(5);
 	else if (key == KEY_BACK_SPASE ) // поворот y
 		fdf->map.rotation_y += ft_degtorad(5);
@@ -65,7 +65,7 @@ static int deal_key(int key, void *param)
 		fdf->map.rotation_y -= ft_degtorad(5);
 	else if (key == KEY_PAGE_DOWN) // поворот z
 		fdf->map.rotation_z += ft_degtorad(5);
-	else if (key == KEY_PAGE_UP) // поворот z
+	else if (key == KEY_END) // поворот z
 		fdf->map.rotation_z -= ft_degtorad(5);
 	else if (key == KEY_ONE) // изометрия 0
 		fdf->map.angle = ft_degtorad(0);
@@ -81,11 +81,11 @@ static int deal_key(int key, void *param)
 		return (0);
 	}
 	calculation(&fdf->map);
-	info(fdf, 1);
+
 	draw_grid(fdf);
 
 	printf("----key--%d-----result--------\n", key);
-	ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
+	info(fdf, 1);
 	return (0);
 }
 
@@ -113,11 +113,11 @@ static int mouse_click(int key, int m_x, int m_y, void *param)
 		return (0);
 	}
 	calculation(&fdf->map);
-	info(fdf, 1);
+
 	draw_grid(fdf);
 
 	printf("----mouse_click--%d--x%d-y%d--result--------\n", key, m_x, m_y);
-	ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
+	info(fdf, 1);
 	return (0);
 }
 
