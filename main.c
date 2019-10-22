@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 19:12:41 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/21 19:20:08 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 04:10:07 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static void	usage(int error)
 {
+	// вставить write c "Ошибка "
+	// вывести норме ошибки
+	// потом пояснение ошибки
 	if (error == -1)
 		write(2, "Ошибка -1. Пустой файл\n", 39);
 	else if (error == -2)
@@ -26,6 +29,7 @@ static void	usage(int error)
 		write(2, "Usage: ./fdf [name_file.fdf]\n", 29);
 	else
 		write(2, "Error\n", 6);
+	ft_putnbr(error);
 }
 
 int			main(int ac, char **av)
@@ -43,6 +47,6 @@ int			main(int ac, char **av)
 			usage(validation);
 	}
 	else
-		usage(-3);
+		usage(-5);
     return 0;
 }

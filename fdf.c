@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:07:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/21 17:42:15 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 01:13:29 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ static int mouse_click(int key, int m_x, int m_y, void *param)
 
 	printf("----mouse_click--%d--x%d-y%d--result--------\n", key, m_x, m_y);
 	info(fdf, 1);
+
 	return (0);
 }
 
@@ -141,7 +142,7 @@ void fdf(t_fdf *fdf)
 	info(fdf, 0);
 
 	printf("-----------result--------\n");
-	ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
+	//ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
 
 	//клава
 	mlx_hook(fdf->win.ptr, 2, 0, deal_key, fdf);
@@ -151,6 +152,7 @@ void fdf(t_fdf *fdf)
 	//mlx_hook(fdf->win.ptr, 6, 0, mouse_move, fdf);
 
 	mlx_loop(fdf->mlx.ptr);
+	printf("%d %d\n", fdf->map.row, fdf->map.col);
 }
 
 void	ft_put_map_project_fd(t_point **map, int row, int col, int fd)

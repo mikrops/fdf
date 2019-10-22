@@ -6,13 +6,13 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/21 19:51:29 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 04:15:26 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	ft_put_map_point_fd(t_point **map, int row, int col, int fd);
+/*static*/ void	ft_put_map_point_fd(t_point **map, int row, int col, int fd);
 
 /*
 **	Возвращает длину значения числа в шестадцатиричной системе
@@ -50,7 +50,10 @@ static int count_digit(char *str)
 			count++;
 		}
 		else if (str[i] == ',')
-			i += hexlen(&str[i]) + 1;
+		{
+			i++;
+			i += hexlen(&str[i]);
+		}
 		else
 			i++;
 	}
@@ -99,43 +102,55 @@ static t_point	**fill_map_point(char *str, int y, int x)
 	return (map);
 }
 
+int	check_str(char const *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!(str[i] >= 'a' && str[i] <= 'f') &&
+			!(str[i] >= 'A' && str[i] <= 'F') &&
+			!ft_isdigit(str[i]) &&
+			!ft_isspace(str[i]) &&
+			str[i] != 'x' &&
+			str[i] != ',')
+			return (-2);
+		i++;
+	}
+	return (0);
+}
 
 int	input_map(char *av, t_fdf *fdf)
 {
 	int		fd;
 	char	*str;
 	char 	*tmp;
-	// можно использовать из map .col и .row,
-	// но тогда надо иниг запускать раньше цыкла или передавать tmp в структуру
-	int 	i;
-	int 	j;
 
-	fd = open(av, O_RDONLY);
-	i = 0;
-	j = 0;
+	if ((fd = open(av, O_RDONLY)) < 1) // если файла нет
+		return (-3);
 	tmp = "";
-//	printf("open(fd = %d)\n", fd);
+	initialization(fdf, av);
 	while (get_next_line(fd, &str))
 	{
-		i = count_digit(str);
-		tmp = ft_strjoin(tmp, str);			//!!!!!исправить ft_strjoin!!!!!!!!
+		// проверить разные ли строки, тогда файл некорректный
+		if (check_str(str)) // если файл некоректный
+			return (-2);
+		fdf->map.col = count_digit(str);
+		tmp = ft_strjoin(tmp, str);			//!!!!!ФРИШИТЬ!!!!!!!!
 		free(str);
-		tmp = ft_strjoin(tmp, "\n");	//!!!!!исправить ft_strjoin!!!!!!!!
-		j++;
+		tmp = ft_strjoin(tmp, "\n");	//!!!!!ФРИШИТЬ!!!!!!!!
+		fdf->map.row++;
 	}
-//	printf("close(fd = %d) j = %d i = %d\n", close(fd), j, i);
-// киевская шубенский переулок
-	initialization(fdf, av);
-	fdf->map.col = i;
-	fdf->map.row = j;
-	fdf->map.plato = 0;
-	fdf->map.start_p = fill_map_point(tmp, j, i);
-	fdf->map.other_p = (t_point **)ft_map_void(j, i, sizeof(t_point *), sizeof(t_point));
-//	map->other_p = copy_map_point(map->start_p, j, i);
+	if (fdf->map.col < 2 || fdf->map.row < 1) // если файл пустой
+		return (-1);
+//	printf("---->%s<--%d %d-", tmp, fdf->map.col, fdf->map.row);
+	fdf->map.start_p = fill_map_point(tmp, fdf->map.row, fdf->map.col);
+	fdf->map.other_p = (t_point **)ft_map_void(fdf->map.row, fdf->map.col,
+			sizeof(t_point *), sizeof(t_point));
 	printf("-----------start_p--------\n");
-	ft_put_map_point_fd(fdf->map.start_p, j, i, 1);
-	printf("\n");
-	//free(tmp);
+	ft_put_map_point_fd(fdf->map.start_p, fdf->map.row, fdf->map.col, 1);
+	printf("row %d col %d\n", fdf->map.row, fdf->map.col);
 	return (0);
 }
 
@@ -145,7 +160,7 @@ int	input_map(char *av, t_fdf *fdf)
 **	пустая			|	-1
 **	некорректная	|	-2
 **	отсутствие ф.	|	-3
-**	неполная		|	-4 предложить действия(дориосвать или выйти)
+**	неполная		|	-4 дориосвать нули
 **	отсутвие пар.	|	-5
 **					|
 **	----------------------------------
@@ -157,7 +172,7 @@ int	input_map(char *av, t_fdf *fdf)
 **	Выводит двумерный числовой(int) массив размерами row x col в поток fd
 */
 
-static void	ft_put_map_point_fd(t_point **map, int row, int col, int fd)
+/*static */void	ft_put_map_point_fd(t_point **map, int row, int col, int fd)
 {
 	int i;
 	int j;
