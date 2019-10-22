@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 04:15:26 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 11:33:39 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,15 +121,36 @@ int	check_str(char const *str)
 	return (0);
 }
 
+int check_point(t_map *map)
+{
+	int j;
+	int i;
+
+	j = 0;
+	i = 0;
+	while(j < map->row)
+	{
+		while(i < map->col)
+		{
+			if (map->start[j][i].x == 0 || map->start[j][i].y == 0)
+				return (1);
+			i++;
+		}
+		i = 0;
+		j++;
+	}
+	return (0);
+}
+
 int	input_map(char *av, t_fdf *fdf)
 {
 	int		fd;
+	int 	tmp_col;
 	char	*str;
-	char 	*tmp;
 
 	if ((fd = open(av, O_RDONLY)) < 1) // если файла нет
 		return (-3);
-	tmp = "";
+	tmp_col = 0;
 	initialization(fdf, av);
 	while (get_next_line(fd, &str))
 	{
@@ -137,20 +158,23 @@ int	input_map(char *av, t_fdf *fdf)
 		if (check_str(str)) // если файл некоректный
 			return (-2);
 		fdf->map.col = count_digit(str);
-		tmp = ft_strjoin(tmp, str);			//!!!!!ФРИШИТЬ!!!!!!!!
+		if (fdf->map.col == tmp_col)
+			tmp_col = fdf->map.col;
+		fdf->map.str_map = ft_strjoin(fdf->map.str_map, str);			//!!!!!ФРИШИТЬ!!!!!!!!
 		free(str);
-		tmp = ft_strjoin(tmp, "\n");	//!!!!!ФРИШИТЬ!!!!!!!!
+		fdf->map.str_map = ft_strjoin(fdf->map.str_map, "\n");		//!!!!!ФРИШИТЬ!!!!!!!!
 		fdf->map.row++;
 	}
 	if (fdf->map.col < 2 || fdf->map.row < 1) // если файл пустой
 		return (-1);
-//	printf("---->%s<--%d %d-", tmp, fdf->map.col, fdf->map.row);
-	fdf->map.start_p = fill_map_point(tmp, fdf->map.row, fdf->map.col);
-	fdf->map.other_p = (t_point **)ft_map_void(fdf->map.row, fdf->map.col,
-			sizeof(t_point *), sizeof(t_point));
-	printf("-----------start_p--------\n");
-	ft_put_map_point_fd(fdf->map.start_p, fdf->map.row, fdf->map.col, 1);
-	printf("row %d col %d\n", fdf->map.row, fdf->map.col);
+	fdf->map.start = fill_map_point(fdf->map.str_map, fdf->map.row, fdf->map.col);
+	if (check_point(&fdf->map)) // если файл неполный
+		return (-4);
+	fdf->map.other = (t_point **)ft_map_void(fdf->map.row, fdf->map.col,
+											 sizeof(t_point *), sizeof(t_point));
+//	printf("-----------start--------\n");
+//	ft_put_map_point_fd(fdf->map.start, fdf->map.row, fdf->map.col, 1);
+//	printf("row %d col %d\n", fdf->map.row, fdf->map.col);
 	return (0);
 }
 

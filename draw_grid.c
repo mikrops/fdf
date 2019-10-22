@@ -23,24 +23,24 @@ void	draw_grid(t_fdf *fdf)
 //	printf("\nrow = %d \t col = %d\n", map->row, map->col);
 	while (j < fdf->map.row)
 	{
-		line.start = fdf->map.other_p[j][i];
+		line.start = fdf->map.other[j][i];
 		while (i < fdf->map.col)
 		{
 			i++;
 			if (j > 0)
 			{
-				line.end = fdf->map.other_p[j - 1][i - 1];
+				line.end = fdf->map.other[j - 1][i - 1];
 				put_line(&fdf->mlx, &fdf->win, &line);
-				line.end = fdf->map.other_p[j][i];
+				line.end = fdf->map.other[j][i];
 //				printf("[%d:%d] ", j, i);
 			}
 			if (i < fdf->map.col)
 			{
-				line.end = fdf->map.other_p[j][i];
+				line.end = fdf->map.other[j][i];
 				put_line(&fdf->mlx, &fdf->win, &line);
 //				printf("%s[%d:%d]%s ", "\x1B[32m", j, i, "\x1B[0m");
 			}
-			line.start = fdf->map.other_p[j][i];
+			line.start = fdf->map.other[j][i];
 		}
 		i = 0;
 		j++;

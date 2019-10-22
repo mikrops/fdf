@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/20 11:51:08 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 11:26:53 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,16 +132,15 @@ typedef struct	s_map
 	double		rotation_z;
 	double		centr_y;
 	double		centr_x;
-	double		shift_x;
-	double		shift_y;
 	double		scale;
 	double		height;
 	double		angle;
 	int 		plato;
 	int			row;
 	int 		col;
-	t_point		**start_p;
-	t_point		**other_p;
+	char 		*str_map;
+	t_point		**start;
+	t_point		**other;
 }				t_map;
 
 typedef struct	s_fdf

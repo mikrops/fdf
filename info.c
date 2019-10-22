@@ -104,7 +104,7 @@ void	info(t_fdf *fdf, int check)
 	if (check == 1)
 	{
 		game(&fdf->mlx, &fdf->win, fdf->map);
-		//print(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
+		//print(fdf->map.other, fdf->map.row, fdf->map.col, 1);
 	}
 	else if (check == 0)
 		start(fdf->mlx.ptr, fdf->win.ptr);

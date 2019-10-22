@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:10:27 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 03:31:40 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 10:29:53 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ void	init_map(t_map *map)
 
 	// настрорить масштаб под окно!!!!!!!!!!!!!!!!!!!!!
 	// и ENTER что бы тоже самое делал))) Спасибо Саня!
-	map->scale = 2;									//масштаб
+	map->scale = 20;									//масштаб
 	map->height = 0;									//высоты
 	map->rotation_x = ft_degtorad(0);			//угол x
 	map->rotation_y = ft_degtorad(0);			//угол y
 	map->rotation_z = ft_degtorad(0);			//угол z
 	map->angle = ft_degtorad(0);				//угол iso
+	map->str_map = "";
 //	printf("\n----init - centr%f - %f\n-----", map->centr_x, map->centr_y);
 }
 

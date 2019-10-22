@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 19:12:41 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 04:10:07 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 11:15:12 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	usage(int error)
 		write(2, "Usage: ./fdf [name_file.fdf]\n", 29);
 	else
 		write(2, "Error\n", 6);
-	ft_putnbr(error);
+
 }
 
 int			main(int ac, char **av)

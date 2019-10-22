@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:31:07 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/20 06:10:06 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 11:26:53 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	iso(double angle, t_point *point)
 
 void	scale(t_map *map, t_point *point, int i, int j)
 {
-	map->other_p[j][i].x = map->scale * i - map->col * map->scale / 2;
-	map->other_p[j][i].y = map->scale * j - map->row * map->scale / 2;
+	map->other[j][i].x = map->scale * i - map->col * map->scale / 2;
+	map->other[j][i].y = map->scale * j - map->row * map->scale / 2;
 	if (point->z > map->plato)
 		point->z = (point->z + map->height) * map->scale;
 	else if (point->z < map->plato)
@@ -67,12 +67,12 @@ void	calculation(t_map *map)
 	{
 		while (i < map->col)
 		{
-			map->other_p[j][i] = map->start_p[j][i];
-			scale(map, &map->other_p[j][i], i , j);
-			rotation(map, &map->other_p[j][i]);
-			iso(map->angle, &map->other_p[j][i]);
-			map->other_p[j][i].x += map->centr_x;
-			map->other_p[j][i].y += map->centr_y;
+			map->other[j][i] = map->start[j][i];
+			scale(map, &map->other[j][i], i , j);
+			rotation(map, &map->other[j][i]);
+			iso(map->angle, &map->other[j][i]);
+			map->other[j][i].x += map->centr_x;
+			map->other[j][i].y += map->centr_y;
 			i++;
 		}
 		i = 0;

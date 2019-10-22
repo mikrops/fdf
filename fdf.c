@@ -142,7 +142,7 @@ void fdf(t_fdf *fdf)
 	info(fdf, 0);
 
 	printf("-----------result--------\n");
-	//ft_put_map_project_fd(fdf->map.other_p, fdf->map.row, fdf->map.col, 1);
+	//ft_put_map_project_fd(fdf->map.other, fdf->map.row, fdf->map.col, 1);
 
 	//клава
 	mlx_hook(fdf->win.ptr, 2, 0, deal_key, fdf);
