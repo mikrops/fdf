@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 11:33:39 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 20:13:44 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,24 @@ static int	hexlen(char *color)
 	return (length);
 }
 
-/*
-**	Возвращает количество чисел в строке, игнорируя цвет
-*/
-
-static int count_digit(char *str)
+int	fill_point(t_point *point, char *str, int j, int i)
 {
-	int i;
-	int digit;
-	int count;
-
-	i = 0;
-	digit = 0;
-	count = 0;
-	while(str[i])
+	if (ft_isdigit(str[i]))
 	{
-		if (ft_isdigit(str[i]))
-		{
-			digit = ft_atoi(&str[i]);
-			i += ft_intcount(digit);
-			count++;
-		}
-		else if (str[i] == ',')
+		point->z = ft_atoi(&str[i]);
+		i += ft_intcount((int)point->z);
+		point->x = (i + 1);
+		point->y = (j + 1);
+		if (str[i] == ',')
 		{
 			i++;
+			point->color = ft_atoi_base(&str[i], 16);
 			i += hexlen(&str[i]);
 		}
-		else
-			i++;
+		i++;
+		return (i);
 	}
-	return (count);
+	return (1);
 }
 
 /*
@@ -81,10 +69,10 @@ static t_point	**fill_map_point(char *str, int y, int x)
 		{
 			if (ft_isdigit(*str))
 			{
-				map[j][i].z = ft_atoi(str);
-				str += ft_intcount((int)map[j][i].z);
 				map[j][i].x = (i + 1);
 				map[j][i].y = (j + 1);
+				map[j][i].z = ft_atoi(str);
+				str += ft_intcount((int)map[j][i].z);
 				if (*str == ',')
 				{
 					map[j][i].color = ft_atoi_base(++str, 16);
@@ -100,25 +88,6 @@ static t_point	**fill_map_point(char *str, int y, int x)
 		j++;
 	}
 	return (map);
-}
-
-int	check_str(char const *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!(str[i] >= 'a' && str[i] <= 'f') &&
-			!(str[i] >= 'A' && str[i] <= 'F') &&
-			!ft_isdigit(str[i]) &&
-			!ft_isspace(str[i]) &&
-			str[i] != 'x' &&
-			str[i] != ',')
-			return (-2);
-		i++;
-	}
-	return (0);
 }
 
 int check_point(t_map *map)
@@ -142,39 +111,26 @@ int check_point(t_map *map)
 	return (0);
 }
 
-int	input_map(char *av, t_fdf *fdf)
+int	input_map(t_fdf *fdf)
 {
-	int		fd;
-	int 	tmp_col;
-	char	*str;
+	int	val = 0;
 
-	if ((fd = open(av, O_RDONLY)) < 1) // если файла нет
-		return (-3);
-	tmp_col = 0;
-	initialization(fdf, av);
-	while (get_next_line(fd, &str))
-	{
-		// проверить разные ли строки, тогда файл некорректный
-		if (check_str(str)) // если файл некоректный
-			return (-2);
-		fdf->map.col = count_digit(str);
-		if (fdf->map.col == tmp_col)
-			tmp_col = fdf->map.col;
-		fdf->map.str_map = ft_strjoin(fdf->map.str_map, str);			//!!!!!ФРИШИТЬ!!!!!!!!
-		free(str);
-		fdf->map.str_map = ft_strjoin(fdf->map.str_map, "\n");		//!!!!!ФРИШИТЬ!!!!!!!!
-		fdf->map.row++;
-	}
-	if (fdf->map.col < 2 || fdf->map.row < 1) // если файл пустой
+	val = validation(fdf);
+	if (val < 0)
+		return (val);
+
+	if (fdf->map.col < 2 || fdf->map.row < 1) // если файл пустой!!!!!!!!!
 		return (-1);
 	fdf->map.start = fill_map_point(fdf->map.str_map, fdf->map.row, fdf->map.col);
-	if (check_point(&fdf->map)) // если файл неполный
+
+	if (check_point(&fdf->map)) // если файл неполный!!!!!!!!!!
 		return (-4);
+
 	fdf->map.other = (t_point **)ft_map_void(fdf->map.row, fdf->map.col,
 											 sizeof(t_point *), sizeof(t_point));
 //	printf("-----------start--------\n");
-//	ft_put_map_point_fd(fdf->map.start, fdf->map.row, fdf->map.col, 1);
-//	printf("row %d col %d\n", fdf->map.row, fdf->map.col);
+	ft_put_map_point_fd(fdf->map.start, fdf->map.row, fdf->map.col, 1);
+	printf("row %d col %d\n", fdf->map.row, fdf->map.col);
 	return (0);
 }
 

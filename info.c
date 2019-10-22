@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:57:57 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/21 17:41:48 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 16:50:05 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ void	game(t_mlx *mlx, t_window *win, t_map map)
 
 	x = 5;
 	y = 5;
+/*
+ * добваить кнопок типа углы  оюб
+ * */
+
 
 	str = "map:";
 	color = PALE;
@@ -104,7 +108,7 @@ void	info(t_fdf *fdf, int check)
 	if (check == 1)
 	{
 		game(&fdf->mlx, &fdf->win, fdf->map);
-		//print(fdf->map.other, fdf->map.row, fdf->map.col, 1);
+		//print(fdf->map.other, fdf->map.row, fdfer->map.col, 1);
 	}
 	else if (check == 0)
 		start(fdf->mlx.ptr, fdf->win.ptr);

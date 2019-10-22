@@ -137,7 +137,7 @@ void				ft_map_chr_del(char **map, size_t row);
 
 /*
 **	My extra functions (fdf)
-**	Мои подопнительные функции (fdf)
+**	Мои подопнительные функции (fdfer)
 **
 **	2019/10/14 18:59:07
 */

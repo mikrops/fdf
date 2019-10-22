@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 14:13:55 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 11:26:53 by mmonahan         ###   ########.fr       */
+/*   Created: 2019/10/22 20:19:18 by mmonahan          #+#    #+#             */
+/*   Updated: 2019/10/22 20:19:18 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
 
-typedef struct		s_color
-{
-	unsigned char	red;
-	unsigned char	green;
-	unsigned char	blue;
-	float			brightness;
-}					t_color;
+//typedef struct		s_color
+//{
+//	unsigned char	red;
+//	unsigned char	green;
+//	unsigned char	blue;
+//	float			brightness;
+//}					t_color;
 
 typedef struct	s_point
 {
@@ -86,7 +86,7 @@ typedef struct	s_point
 	double		y;
 	double		z;
 	int 		color;
-	t_color		_color;
+	//t_color		_color;
 }				t_point;
 
 typedef struct	s_line
@@ -154,8 +154,9 @@ void			put_line(t_mlx *mlx, t_window *win, t_line *line);
 void			draw_grid(t_fdf *fdf);
 void			info(t_fdf *fdf, int check);
 void			calculation(t_map *map);
-void			fdf(t_fdf *fdf);
+void			fdfer(t_fdf *fdf);
+int				validation(t_fdf *fdf);
 void			initialization(t_fdf *fdf, char *name);
-int				input_map(char *av, t_fdf *fdf);
+int				input_map(t_fdf *fdf);
 
 #endif

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   fdfer.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -35,7 +35,7 @@ static int deal_key(int key, void *param)
 	{
 		fdf->map.centr_x = (WIDTH - fdf->map.col) / 2 + 13.5;
 		fdf->map.centr_y = (HEIGHT - fdf->map.row) / 2 + 17;
-//		printf("\n----KEY - centr%f - %f\n-----", fdf->map.centr_x, fdf->map.centr_y);
+//		printf("\n----KEY - centr%f - %f\n-----", fdf->map.centr_x, fdfer->map.centr_y);
 	}
 	else if (key == KEY_LEFT)
 		fdf->map.centr_x += -10.0;
@@ -124,9 +124,9 @@ static int mouse_click(int key, int m_x, int m_y, void *param)
 
 //static int mouse_move(int key, int x, int y, void *param)
 //{
-//	t_fdf	*fdf;
+//	t_fdf	*fdfer;
 //
-//	fdf = param;
+//	fdfer = param;
 ////	fdf->map.x = x;
 ////	fdf->map.y = y;
 ////	info(fdf);
@@ -136,20 +136,20 @@ static int mouse_click(int key, int m_x, int m_y, void *param)
 //	return (0);
 //}
 
-void fdf(t_fdf *fdf)
+void fdfer(t_fdf *fdf)
 {
 	calculation(&fdf->map);
 	info(fdf, 0);
 
 	printf("-----------result--------\n");
-	//ft_put_map_project_fd(fdf->map.other, fdf->map.row, fdf->map.col, 1);
+	//ft_put_map_project_fd(fdf->map.other, fdf->map.row, fdfer->map.col, 1);
 
 	//клава
 	mlx_hook(fdf->win.ptr, 2, 0, deal_key, fdf);
 	//мышь нажатия /4 - нажал /5 - отпустил
 	mlx_hook(fdf->win.ptr, 4, 0, mouse_click, fdf);
 	//мышь движение
-	//mlx_hook(fdf->win.ptr, 6, 0, mouse_move, fdf);
+	//mlx_hook(fdf->win.ptr, 6, 0, mouse_move, fdfer);
 
 	mlx_loop(fdf->mlx.ptr);
 	printf("%d %d\n", fdf->map.row, fdf->map.col);

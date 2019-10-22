@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:10:27 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 10:29:53 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/22 20:02:03 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_map(t_map *map)
 
 	// настрорить масштаб под окно!!!!!!!!!!!!!!!!!!!!!
 	// и ENTER что бы тоже самое делал))) Спасибо Саня!
-	map->scale = 20;									//масштаб
+	map->scale = 2;									//масштаб
 	map->height = 0;									//высоты
 	map->rotation_x = ft_degtorad(0);			//угол x
 	map->rotation_y = ft_degtorad(0);			//угол y
@@ -37,7 +37,7 @@ void	initialization(t_fdf *fdf, char *name)
 	fdf->mlx.ptr = mlx_init();
 	fdf->win.width = WIDTH;
 	fdf->win.height = HEIGHT;
-	fdf->win.title = "21.fdf.mmonahan";
+	fdf->win.title = "21.fdfer.mmonahan";
 	fdf->win.name = name;
 	fdf->win.ptr = mlx_new_window(fdf->mlx.ptr, fdf->win.width, fdf->win.height, fdf->win.title);
 	init_map(&fdf->map);
