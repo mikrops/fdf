@@ -6,11 +6,26 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:57:57 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/23 18:36:12 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/23 20:54:25 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	arr_game(t_map map, char **game_param, char **game_value)
+{
+	game_param[0] = "map:";
+	game_param[1] = "scale:";
+	game_param[2] = "hight:";
+	game_param[3] = "4";
+	game_param[4] = "5";
+
+	game_value[0] = "name"; //win->name;
+	game_value[1] = ft_itoa((int)map.scale);
+	game_value[2] = ft_itoa((int)map.height);
+	game_value[3] = "4";
+	game_value[4] = "5";
+}
 
 void	start(void *mptr, void *wptr)
 {
@@ -46,39 +61,57 @@ void	start(void *mptr, void *wptr)
 void	game(t_mlx *mlx, t_window *win, t_map map)
 {
 	int		color;
-	char	*str;
-	int		x;
 	int		y;
 
+	char	*param[5];
+	char	*value[5];
+	arr_game(map, param, value);
 
-	x = 5;
 	y = 5;
 /*
  * добваить кнопок типа углы  оюб
+ * размеры окна
+ * углы поворотов
+ * угол изометрии
+ *
  * */
 
+	int i = 0;
 
-	str = "map:";
-	color = PALE;
-	mlx_string_put(mlx->ptr, win->ptr, x, y, color, str);
-	str = win->name;
-	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
+	while(i < 5)
+	{
+		color = PALE;
+		mlx_string_put(mlx->ptr, win->ptr, 5, y, color, param[i]);
+		mlx_string_put(mlx->ptr, win->ptr, 90, y += 30, color, value[i]);
+		i++;
+	}
 
-	str = "scale:";
-	color = PALE;
-	mlx_string_put(mlx->ptr, win->ptr, 5, y += 30, color, str);
-	str = ft_itoa((int)map.scale);
-	color = map.scale > MIN_SCALE && map.scale < MAX_SCALE ? GREEN : RED;
-	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
-	ft_strdel(&str);
+//	ft_strdel(&value[1]);
+//	ft_strdel(&value[2]);
 
-	str = "hight:";
-	color = PALE;
-	mlx_string_put(mlx->ptr, win->ptr, 5, y += 30, color, str);
-	str = ft_itoa((int)map.height);
-	color = map.height > MIN_HEIGTN && map.height < MAX_HEIGTN ? GREEN : RED;
-	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
-	ft_strdel(&str);
+//	char	*str;
+
+//	str = "map:";
+//	color = PALE;
+//	mlx_string_put(mlx->ptr, win->ptr, 5, y, color, str);
+//	str = win->name;
+//	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
+//
+//	str = "scale:";
+//	color = PALE;
+//	mlx_string_put(mlx->ptr, win->ptr, 5, y += 30, color, str);
+//	str = ft_itoa((int)map.scale);
+//	color = map.scale > MIN_SCALE && map.scale < MAX_SCALE ? GREEN : RED;
+//	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
+//	ft_strdel(&str);
+//
+//	str = "hight:";
+//	color = PALE;
+//	mlx_string_put(mlx->ptr, win->ptr, 5, y += 30, color, str);
+//	str = ft_itoa((int)map.height);
+//	color = map.height > MIN_HEIGTN && map.height < MAX_HEIGTN ? GREEN : RED;
+//	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
+//	ft_strdel(&str);
 }
 
 void	info(t_fdf *fdf, int check)
