@@ -6,14 +6,14 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 20:19:18 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 20:19:18 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/23 16:57:19 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_FDF_H
 # define FT_FDF_H
-# define WIDTH 2300.0
-# define HEIGHT 800.0
+# define WIDTH 1000.0
+# define HEIGHT 1000.0
 
 /*
 **	Коды клавишь
@@ -150,11 +150,12 @@ typedef struct	s_fdf
 	t_map		map;
 }				t_fdf;
 
+void			put_map_point_fd(int fd, t_point **point, int row, int col);
 void			put_line(t_mlx *mlx, t_window *win, t_line *line);
 void			draw_grid(t_fdf *fdf);
 void			info(t_fdf *fdf, int check);
 void			calculation(t_map *map);
-void			fdfer(t_fdf *fdf);
+void			fdf(t_fdf *fdf);
 int				validation(t_fdf *fdf);
 void			initialization(t_fdf *fdf, char *name);
 int				input_map(t_fdf *fdf);

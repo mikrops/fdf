@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:31:07 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 11:26:53 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:25:28 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	calculation(t_map *map)
 
 	i = 0;
 	j = 0;
+
 	while (j < map->row)
 	{
 		while (i < map->col)

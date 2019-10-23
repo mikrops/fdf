@@ -137,7 +137,7 @@ void				ft_map_chr_del(char **map, size_t row);
 
 /*
 **	My extra functions (fdf)
-**	Мои подопнительные функции (fdfer)
+**	Мои подопнительные функции (fdf)
 **
 **	2019/10/14 18:59:07
 */
@@ -148,4 +148,5 @@ void				**ft_map_void(int row, int col, size_t size_row,
 					size_t size_col);
 void				ft_map_void_del(void **map, size_t row);
 double				ft_degtorad(double degree);
+char				*ft_str_rejoin(char *s1, char const *s2);
 #endif

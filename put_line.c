@@ -36,7 +36,8 @@ void		put_line(t_mlx *mlx, t_window *win, t_line *line)
 	mlx_pixel_put(mlx->ptr, win->ptr, bresenham.x1, bresenham.y1, 0xFFFFFF);
 	while (bresenham.x1 != bresenham.x2 || bresenham.y1 != bresenham.y2)
 	{
-		col = line->start.z > 0 ? 8232311 + ((line->start.z + 1) * 20) : 23423 - ((line->start.z + 1) * 20);
+//		col = line->start.z > 0 ? 8232311 + ((line->start.z + 1) * 20) : 23423 - ((line->start.z + 1) * 20);
+		col = AQUAMARINE;
 		mlx_pixel_put(mlx->ptr, win->ptr, bresenham.x1, bresenham.y1, col);
 		//printf("pixel [%d/%d %d/%d]\t", bresenham.x1, bresenham.x2, bresenham.y1, bresenham.y2);
 		bresenham.error = bresenham.deltaerror * 2;

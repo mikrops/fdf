@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:57:57 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 16:50:05 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/23 18:36:12 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	start(void *mptr, void *wptr)
 		mlx_string_put(mptr, wptr, x - ft_strlen(temp[i]) * 5,
 			y + i * 35, color -= AQUAMARINE, temp[i]);
 		i--;
-//		color -= AQUAMARINE;
 	}
 }
 
@@ -63,7 +62,7 @@ void	game(t_mlx *mlx, t_window *win, t_map map)
 	color = PALE;
 	mlx_string_put(mlx->ptr, win->ptr, x, y, color, str);
 	str = win->name;
-	mlx_string_put(mlx->ptr, win->ptr, x += 85, y, color, str);
+	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
 
 	str = "scale:";
 	color = PALE;
@@ -71,6 +70,7 @@ void	game(t_mlx *mlx, t_window *win, t_map map)
 	str = ft_itoa((int)map.scale);
 	color = map.scale > MIN_SCALE && map.scale < MAX_SCALE ? GREEN : RED;
 	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
+	ft_strdel(&str);
 
 	str = "hight:";
 	color = PALE;
@@ -78,29 +78,7 @@ void	game(t_mlx *mlx, t_window *win, t_map map)
 	str = ft_itoa((int)map.height);
 	color = map.height > MIN_HEIGTN && map.height < MAX_HEIGTN ? GREEN : RED;
 	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
-}
-
-void	print(t_point **map, int row, int col, int fd)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (j < row)
-	{
-		while (i < col)
-		{
-			dprintf(fd, "[%.f,%.f,%.f,%d]\t", map[j][i].x, map[j][i].y, map[j][i].z, map[j][i].color);
-//			ft_putnbr_fd(map[j][i].z, fd);
-//			ft_putchar_fd('\t', fd);
-			i++;
-		}
-		dprintf(fd, "\n");
-//		ft_putstr_fd("\n", fd);
-		i = 0;
-		j++;
-	}
+	ft_strdel(&str);
 }
 
 void	info(t_fdf *fdf, int check)
@@ -108,9 +86,8 @@ void	info(t_fdf *fdf, int check)
 	if (check == 1)
 	{
 		game(&fdf->mlx, &fdf->win, fdf->map);
-		//print(fdf->map.other, fdf->map.row, fdfer->map.col, 1);
+		//put_map_point_fd(1, fdf->map.other, fdf->map.row, fdf->map.col);
 	}
 	else if (check == 0)
 		start(fdf->mlx.ptr, fdf->win.ptr);
-
 }

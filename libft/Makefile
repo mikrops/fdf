@@ -89,7 +89,8 @@ SRC = 	ft_memset.c \
 		ft_atoi_base.c \
 		ft_map_void.c \
 		ft_map_void_del.c \
-		ft_degtorad.c
+		ft_degtorad.c \
+		ft_str_rejoin.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 19:12:41 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 20:15:19 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/23 13:02:36 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	usage(int error)
 	else if (error == -4)
 		write(2, "Ошибка -4. Неполный файл. По возможности заполнено нулями\n", 104);
 	else if (error == -5)
-		write(2, "Usage: ./fdf [name_file.fdfer]\n", 29);
+		write(2, "Usage: ./fdf [name_file.fdf]\n", 29);
 	else
 		write(2, "Error\n", 6);
 
@@ -34,18 +34,20 @@ static void	usage(int error)
 
 int			main(int ac, char **av)
 {
-	t_fdf	fdf;
+	t_fdf	tfdf;
 	int		validation;
+
+
 
 	if (ac == 2)
 	{
 		write(1, "Привет, сын железа!\n", 35);
 
-		initialization(&fdf, av[1]);
+		initialization(&tfdf, av[1]);
 
-		validation = input_map(&fdf);
+		validation = input_map(&tfdf);
 		if (validation == 0)
-			fdfer(&fdf);
+			fdf(&tfdf);
 		else
 			usage(validation);
 	}

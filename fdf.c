@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdfer.c                                              :+:      :+:    :+:   */
+/*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/11 12:07:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/22 01:13:29 by mmonahan         ###   ########.fr       */
+/*   Created: 2019/10/23 12:59:14 by mmonahan          #+#    #+#             */
+/*   Updated: 2019/10/23 16:56:07 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 void	ft_put_map_project_fd(t_point **map, int row, int col, int fd);
+
+void	start_poisition(t_map *map)
+{
+	int		win;
+	double	fig;
+
+	win = WIDTH < HEIGHT ? WIDTH : HEIGHT;
+	fig = map->col > map->row ? map->col : map->row;
+	map->scale  = win / fig;
+}
 
 static int deal_key(int key, void *param)
 {
@@ -22,20 +32,19 @@ static int deal_key(int key, void *param)
 	mlx_clear_window(fdf->mlx.ptr, fdf->win.ptr);
 	if (key == KEY_ESC)
 		exit(0);
-	else if (key == KEY_DELETE) //сетка изометрия 0
+	else if (key == KEY_DELETE)
 	{
-		fdf->map.scale = 20;
+		start_poisition(&fdf->map);
 		fdf->map.height = 0;
 		fdf->map.rotation_x = ft_degtorad(0);
 		fdf->map.rotation_y = ft_degtorad(0);
 		fdf->map.rotation_z = ft_degtorad(0);
 		fdf->map.angle = ft_degtorad(0);
 	}
-	else if (key == KEY_ENTER) // центрирование
+	else if (key == KEY_ENTER)
 	{
-		fdf->map.centr_x = (WIDTH - fdf->map.col) / 2 + 13.5;
-		fdf->map.centr_y = (HEIGHT - fdf->map.row) / 2 + 17;
-//		printf("\n----KEY - centr%f - %f\n-----", fdf->map.centr_x, fdfer->map.centr_y);
+		fdf->map.centr_x = WIDTH / 1.9;
+		fdf->map.centr_y = HEIGHT / 1.83;
 	}
 	else if (key == KEY_LEFT)
 		fdf->map.centr_x += -10.0;
@@ -55,6 +64,8 @@ static int deal_key(int key, void *param)
 		if (fdf->map.height > MIN_HEIGTN)
 			fdf->map.height -= STEP_HEIGTN;
 	}
+	// ПОВИКСИТЬ с ПЕРЕМЕННОЙ УГЛАААА!!! ГДЕ ТО СБРАСЫВАЕТСЯ
+	// В ИНФО БУДЕТ ВИДНО)
 	else if (key == KEY_HOME) // поворот x
 		fdf->map.rotation_x += ft_degtorad(5);
 	else if (key == KEY_PAGE_UP) // поворот x
@@ -124,9 +135,9 @@ static int mouse_click(int key, int m_x, int m_y, void *param)
 
 //static int mouse_move(int key, int x, int y, void *param)
 //{
-//	t_fdf	*fdfer;
+//	t_fdf	*fdf;
 //
-//	fdfer = param;
+//	fdf = param;
 ////	fdf->map.x = x;
 ////	fdf->map.y = y;
 ////	info(fdf);
@@ -136,23 +147,23 @@ static int mouse_click(int key, int m_x, int m_y, void *param)
 //	return (0);
 //}
 
-void fdfer(t_fdf *fdf)
+void fdf(t_fdf *fdf)
 {
+	start_poisition(&fdf->map);
 	calculation(&fdf->map);
 	info(fdf, 0);
 
-	printf("-----------result--------\n");
-	//ft_put_map_project_fd(fdf->map.other, fdf->map.row, fdfer->map.col, 1);
+	printf("-----------fdf--------\n");
+	ft_put_map_project_fd(fdf->map.other, fdf->map.row, fdf->map.col, 1);
 
 	//клава
 	mlx_hook(fdf->win.ptr, 2, 0, deal_key, fdf);
 	//мышь нажатия /4 - нажал /5 - отпустил
 	mlx_hook(fdf->win.ptr, 4, 0, mouse_click, fdf);
 	//мышь движение
-	//mlx_hook(fdf->win.ptr, 6, 0, mouse_move, fdfer);
+	//mlx_hook(fdf->win.ptr, 6, 0, mouse_move, fdf);
 
 	mlx_loop(fdf->mlx.ptr);
-	printf("%d %d\n", fdf->map.row, fdf->map.col);
 }
 
 void	ft_put_map_project_fd(t_point **map, int row, int col, int fd)

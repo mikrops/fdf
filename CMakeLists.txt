@@ -6,6 +6,10 @@ set(CMAKE_C_STANDARD 99)
 file(GLOB C_HEADERS "minilibx_macos/*.h")
 
 add_definitions(-Wall -Werror -Wextra)
+#add_compile_options(-Wall -Wextra -Werror)
+
+#target_link_libraries(fdf
+#        LINK_PUBLIC ${CMAKE_SOURCE_DIR}/libft/libft.a)
 
 add_executable(fdf main.c fdf.h
         libft/ft_memset.c
@@ -88,7 +92,7 @@ add_executable(fdf main.c fdf.h
         libft/libft.h
         get_next_line/get_next_line.c
         get_next_line/get_next_line.h
-        put_line.c input_map.c fdf.c draw_grid.c initialization.c calculation.c info.c libft/ft_map_void_del.c validation.c)
+        put_line.c input_map.c fdf.c draw_grid.c initialization.c calculation.c info.c libft/ft_map_void_del.c validation.c put_map_point_fd.c libft/ft_str_rejoin.c)
 
 target_link_libraries(${PROJECT_NAME}
         "mlx"
