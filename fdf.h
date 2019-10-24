@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 20:19:18 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/23 16:57:19 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 14:13:49 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@
 # define MUSE_CLICK_RIGHT 2
 # define MOUSE_SCROLL_BACKWARD 4
 # define MOUSE_SCROLL_FORWARD 5
+
+# define KEY_G 5
+# define KEY_H 4
+# define KEY_B 11
+# define KEY_N 45
+
+# define KEY_C 8
 # define KEY_Y 16
 # define KEY_T 17
 # define KEY_ONE 18
@@ -52,6 +59,9 @@
 # define RED 0xff0000
 # define PALE 0xafeeee
 # define AQUAMARINE 0x66cdaa
+# define BISQUE3 0xcdb79e
+# define DEEPSKYBLUE3 0x009acd
+
 
 /*
 **	Минимум, максимум и шаг расчетных переменных
@@ -114,6 +124,7 @@ typedef struct	s_window
 	void		*ptr;
 	int			width;
 	int			height;
+	int 		themes;
 	int			mouse_x;
 	int 		mouse_y;
 	char 		*title;
@@ -134,7 +145,7 @@ typedef struct	s_map
 	double		centr_x;
 	double		scale;
 	double		height;
-	double		angle;
+	double		iso;
 	int 		plato;
 	int			row;
 	int 		col;

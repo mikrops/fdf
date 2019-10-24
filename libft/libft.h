@@ -148,5 +148,6 @@ void				**ft_map_void(int row, int col, size_t size_row,
 					size_t size_col);
 void				ft_map_void_del(void **map, size_t row);
 double				ft_degtorad(double degree);
+double				ft_radtodeg(double radian);
 char				*ft_str_rejoin(char *s1, char const *s2);
 #endif

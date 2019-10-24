@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:57:57 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/23 20:54:25 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 13:32:48 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,24 @@
 void	arr_game(t_map map, char **game_param, char **game_value)
 {
 	game_param[0] = "map:";
-	game_param[1] = "scale:";
-	game_param[2] = "hight:";
-	game_param[3] = "4";
-	game_param[4] = "5";
+	game_param[1] = "width";
+	game_param[2] = "height";
+	game_param[3] = "scale:";
+	game_param[4] = "hight:";
+	game_param[5] = "iso:";
+	game_param[6] = "x-axis:";
+	game_param[7] = "y-axis:";
+	game_param[8] = "z-axis:";
 
-	game_value[0] = "name"; //win->name;
-	game_value[1] = ft_itoa((int)map.scale);
-	game_value[2] = ft_itoa((int)map.height);
-	game_value[3] = "4";
-	game_value[4] = "5";
+	game_value[0] = "name";
+	game_value[1] = ft_itoa(WIDTH);
+	game_value[2] = ft_itoa(HEIGHT);
+	game_value[3] = ft_itoa((int)map.scale);
+	game_value[4] = ft_itoa((int)map.height);
+	game_value[5] = ft_itoa((int)ft_radtodeg(map.iso));
+	game_value[6] = ft_itoa((int)ft_radtodeg(map.rotation_x));
+	game_value[7] = ft_itoa((int)ft_radtodeg(map.rotation_y));
+	game_value[8] = ft_itoa((int)ft_radtodeg(map.rotation_z));
 }
 
 void	start(void *mptr, void *wptr)
@@ -62,56 +70,35 @@ void	game(t_mlx *mlx, t_window *win, t_map map)
 {
 	int		color;
 	int		y;
+	int		i;
+	char	*param[9];
+	char	*value[9];
 
-	char	*param[5];
-	char	*value[5];
 	arr_game(map, param, value);
-
+	i = 0;
 	y = 5;
+	value[0] = win->name;
 /*
  * добваить кнопок типа углы  оюб
- * размеры окна
  * углы поворотов
  * угол изометрии
  *
  * */
-
-	int i = 0;
-
-	while(i < 5)
+	while (i < 9)
 	{
-		color = PALE;
+		color = BISQUE3;
+		if (i > 0)
+			y += 30;
 		mlx_string_put(mlx->ptr, win->ptr, 5, y, color, param[i]);
-		mlx_string_put(mlx->ptr, win->ptr, 90, y += 30, color, value[i]);
+		if (i == 3)
+			color = map.scale > MIN_SCALE && map.scale < MAX_SCALE ? GREEN : RED;
+		else if (i == 4)
+			color = map.height > MIN_HEIGTN && map.height < MAX_HEIGTN ? GREEN : RED;
+		else
+			color = DEEPSKYBLUE3;
+		mlx_string_put(mlx->ptr, win->ptr, 90, y, color, value[i]);
 		i++;
 	}
-
-//	ft_strdel(&value[1]);
-//	ft_strdel(&value[2]);
-
-//	char	*str;
-
-//	str = "map:";
-//	color = PALE;
-//	mlx_string_put(mlx->ptr, win->ptr, 5, y, color, str);
-//	str = win->name;
-//	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
-//
-//	str = "scale:";
-//	color = PALE;
-//	mlx_string_put(mlx->ptr, win->ptr, 5, y += 30, color, str);
-//	str = ft_itoa((int)map.scale);
-//	color = map.scale > MIN_SCALE && map.scale < MAX_SCALE ? GREEN : RED;
-//	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
-//	ft_strdel(&str);
-//
-//	str = "hight:";
-//	color = PALE;
-//	mlx_string_put(mlx->ptr, win->ptr, 5, y += 30, color, str);
-//	str = ft_itoa((int)map.height);
-//	color = map.height > MIN_HEIGTN && map.height < MAX_HEIGTN ? GREEN : RED;
-//	mlx_string_put(mlx->ptr, win->ptr, 90, y, color, str);
-//	ft_strdel(&str);
 }
 
 void	info(t_fdf *fdf, int check)

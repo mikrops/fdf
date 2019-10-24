@@ -89,10 +89,13 @@ add_executable(fdf main.c fdf.h
         libft/ft_put_map_chr_fd.c
         libft/ft_map_int_del.c
         libft/ft_map_chr_del.c
+        libft/ft_map_void_del.c
+        libft/ft_str_rejoin.c
+        libft/ft_radtodeg.c
         libft/libft.h
         get_next_line/get_next_line.c
         get_next_line/get_next_line.h
-        put_line.c input_map.c fdf.c draw_grid.c initialization.c calculation.c info.c libft/ft_map_void_del.c validation.c put_map_point_fd.c libft/ft_str_rejoin.c)
+        put_line.c input_map.c fdf.c draw_grid.c initialization.c calculation.c info.c validation.c put_map_point_fd.c)
 
 target_link_libraries(${PROJECT_NAME}
         "mlx"

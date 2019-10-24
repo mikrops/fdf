@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 12:59:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/23 16:56:07 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 14:46:27 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	start_poisition(t_map *map)
 
 	win = WIDTH < HEIGHT ? WIDTH : HEIGHT;
 	fig = map->col > map->row ? map->col : map->row;
-	map->scale  = win / fig;
+	map->scale  = win / fig / 2;
 }
 
 static int deal_key(int key, void *param)
@@ -32,14 +32,17 @@ static int deal_key(int key, void *param)
 	mlx_clear_window(fdf->mlx.ptr, fdf->win.ptr);
 	if (key == KEY_ESC)
 		exit(0);
+	else if (key == KEY_C)
+		fdf->win.themes += 1;
 	else if (key == KEY_DELETE)
 	{
 		start_poisition(&fdf->map);
 		fdf->map.height = 0;
+		fdf->win.themes = 0;
 		fdf->map.rotation_x = ft_degtorad(0);
 		fdf->map.rotation_y = ft_degtorad(0);
 		fdf->map.rotation_z = ft_degtorad(0);
-		fdf->map.angle = ft_degtorad(0);
+		fdf->map.iso = ft_degtorad(0);
 	}
 	else if (key == KEY_ENTER)
 	{
@@ -66,9 +69,9 @@ static int deal_key(int key, void *param)
 	}
 	// ПОВИКСИТЬ с ПЕРЕМЕННОЙ УГЛАААА!!! ГДЕ ТО СБРАСЫВАЕТСЯ
 	// В ИНФО БУДЕТ ВИДНО)
-	else if (key == KEY_HOME) // поворот x
-		fdf->map.rotation_x += ft_degtorad(5);
 	else if (key == KEY_PAGE_UP) // поворот x
+		fdf->map.rotation_x += ft_degtorad(5);
+	else if (key == KEY_HOME) // поворот x
 		fdf->map.rotation_x -= ft_degtorad(5);
 	else if (key == KEY_BACK_SPASE ) // поворот y
 		fdf->map.rotation_y += ft_degtorad(5);
@@ -79,13 +82,13 @@ static int deal_key(int key, void *param)
 	else if (key == KEY_END) // поворот z
 		fdf->map.rotation_z -= ft_degtorad(5);
 	else if (key == KEY_ONE) // изометрия 0
-		fdf->map.angle = ft_degtorad(0);
+		fdf->map.iso = ft_degtorad(0);
 	else if (key == KEY_TWO) // изометрия 30
-		fdf->map.angle = ft_degtorad(30);
+		fdf->map.iso = ft_degtorad(30);
 	else if (key == KEY_Y) // изометрия -1
-		fdf->map.angle -= ft_degtorad(1);
+		fdf->map.iso -= ft_degtorad(1);
 	else if (key == KEY_T) // изометрия +1
-		fdf->map.angle += ft_degtorad(1);
+		fdf->map.iso += ft_degtorad(1);
 	else
 	{
 		info(fdf, 0);

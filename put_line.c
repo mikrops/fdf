@@ -6,11 +6,36 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 17:16:22 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/17 20:29:52 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 14:49:42 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static int color(int themes, t_line *line)
+{
+	int col;
+
+	if (themes % 2)
+	{
+		if (line->start.z != 0 && line->end.z != 0 &&
+			line->start.z == line->end.z)
+			col = line->start.z + AQUAMARINE;
+		else
+			col = AQUAMARINE;
+	}
+	else if (themes % 3)
+	{
+		if (line->start.color > 0 && line->end.color > 0 &&
+			line->start.color == line->end.color)
+			col = line->start.color;
+		else
+			col = AQUAMARINE;
+	}
+	else
+		col = AQUAMARINE;
+	return(col);
+}
 
 static void	init_bresenham(t_bresenham *bresenham, t_line *line)
 {
@@ -30,16 +55,33 @@ void		put_line(t_mlx *mlx, t_window *win, t_line *line)
 {
 	int col;
 
-	col = 0;
+	col = AQUAMARINE;
 	t_bresenham	bresenham;
 	init_bresenham(&bresenham, line);
-	mlx_pixel_put(mlx->ptr, win->ptr, bresenham.x1, bresenham.y1, 0xFFFFFF);
+	//mlx_pixel_put(mlx->ptr, win->ptr, bresenham.x1, bresenham.y1, 0xFFFFFF);
 	while (bresenham.x1 != bresenham.x2 || bresenham.y1 != bresenham.y2)
 	{
-//		col = line->start.z > 0 ? 8232311 + ((line->start.z + 1) * 20) : 23423 - ((line->start.z + 1) * 20);
-		col = AQUAMARINE;
+
+//		if (win->themes % 2)
+//		{
+//			if (line->start.z != 0 && line->end.z != 0 && line->start
+//			.z == line->end.z)
+//				col = line->start.z + AQUAMARINE;
+//			else
+//				col = AQUAMARINE;
+//		}
+//		else if (win->themes % 3)
+//		{
+//			if (line->start.color > 0 && line->end.color > 0 && line->start
+//			.color	== line->end.color)
+//				col = line->start.color;
+//			else
+//				col = AQUAMARINE;
+//		}
+//		else
+//			col = AQUAMARINE;
+		col = color(win->themes, line);
 		mlx_pixel_put(mlx->ptr, win->ptr, bresenham.x1, bresenham.y1, col);
-		//printf("pixel [%d/%d %d/%d]\t", bresenham.x1, bresenham.x2, bresenham.y1, bresenham.y2);
 		bresenham.error = bresenham.deltaerror * 2;
 		if (bresenham.error > -bresenham.deltay)
 		{
@@ -51,7 +93,5 @@ void		put_line(t_mlx *mlx, t_window *win, t_line *line)
 			bresenham.deltaerror += bresenham.deltax;
 			bresenham.y1 += bresenham.diry;
 		}
-		//printf("pixel [%d/%d %d/%d]\n", bresenham.x1, bresenham.x2, bresenham.y1, bresenham.y2);
 	}
-	//printf("\n");
 }

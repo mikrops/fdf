@@ -71,7 +71,7 @@ void	calculation(t_map *map)
 			map->other[j][i] = map->start[j][i];
 			scale(map, &map->other[j][i], i , j);
 			rotation(map, &map->other[j][i]);
-			iso(map->angle, &map->other[j][i]);
+			iso(map->iso, &map->other[j][i]);
 			map->other[j][i].x += map->centr_x;
 			map->other[j][i].y += map->centr_y;
 			i++;
