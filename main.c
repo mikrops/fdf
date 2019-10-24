@@ -12,11 +12,12 @@
 
 #include "fdf.h"
 
+/*
+**	Выводит на консоль системное сообщение в случае ошибки
+*/
+
 static void	usage(int error)
 {
-	// вставить write c "Ошибка "
-	// вывести норме ошибки
-	// потом пояснение ошибки
 	if (error == -1)
 		write(2, "Ошибка -1. Пустой файл\n", 39);
 	else if (error == -2)
@@ -29,7 +30,6 @@ static void	usage(int error)
 		write(2, "Usage: ./fdf [name_file.fdf]\n", 29);
 	else
 		write(2, "Error\n", 6);
-
 }
 
 int			main(int ac, char **av)
@@ -37,14 +37,10 @@ int			main(int ac, char **av)
 	t_fdf	tfdf;
 	int		validation;
 
-
-
 	if (ac == 2)
 	{
 		write(1, "Привет, сын железа!\n", 35);
-
 		initialization(&tfdf, av[1]);
-
 		validation = input_map(&tfdf);
 		if (validation == 0)
 			fdf(&tfdf);

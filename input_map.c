@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/23 19:50:53 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 16:20:56 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ static void	fill_map_point(t_point **point, char *str, int y)
 	}
 }
 
+/*
+**	Проверяет валидность матрицы точек
+*/
+
 int check_point(t_map *map)
 {
 	int j;
@@ -90,6 +94,8 @@ int check_point(t_map *map)
 		{
 			if (map->start[j][i].x == 0 || map->start[j][i].y == 0)
 				return (1);
+			if (map->start[j][i].color)
+				map->flag_color = 1;
 			i++;
 		}
 		i = 0;
@@ -98,6 +104,13 @@ int check_point(t_map *map)
 	return (0);
 }
 
+/*
+**	Заполняет матрицу точек.
+**	Возвращает:	0 в случае валидности матрицы
+**				-1 в случае маленькой фигуры
+**				-4 в случае путсых точек
+*/
+
 int	input_map(t_fdf *fdf)
 {
 	int	val = 0;
@@ -105,33 +118,18 @@ int	input_map(t_fdf *fdf)
 	val = validation(fdf);
 	if (val < 0)
 		return (val);
-
-	if (fdf->map.col < 2 || fdf->map.row < 1) // если файл пустой!!!!!!!!!
+	if (fdf->map.col < 2 || fdf->map.row < 1)
 		return (-1);
-
 	fdf->map.start = (t_point **)ft_map_void(fdf->map.row, fdf->map.col,
 		sizeof(t_point *), sizeof(t_point));
 	fdf->map.other = (t_point **)ft_map_void(fdf->map.row, fdf->map.col,
 		sizeof(t_point *), sizeof(t_point));
 
 	fill_map_point(fdf->map.start, fdf->map.str_map, fdf->map.row);
-	if (check_point(&fdf->map)) // если файл неполный!!!!!!!!!!
+	if (check_point(&fdf->map))
 		return (-4);
 	printf("-----------start--------\n");
 	put_map_point_fd(1, fdf->map.start, fdf->map.row, fdf->map.col);
 	printf("row %d col %d\n", fdf->map.row, fdf->map.col);
 	return (0);
 }
-
-/*
-**	ошибки карты	|	решения
-**	----------------------------------
-**	пустая			|	-1
-**	некорректная	|	-2
-**	отсутствие ф.	|	-3
-**	неполная		|	-4 дориосвать нули
-**	отсутвие пар.	|	-5
-**					|
-**	----------------------------------
-**
-*/

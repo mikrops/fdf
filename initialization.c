@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:10:27 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/24 14:08:50 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 16:20:56 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	init_map(t_map *map)
 {
 	map->plato = 0;
+	map->flag_color = 0;
+	map->loger = -1;
 	map->col = 0;
 	map->row = 0;
 	map->centr_x = WIDTH / 1.9;

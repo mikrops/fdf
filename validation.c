@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 14:17:35 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/23 19:52:01 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 16:20:56 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,17 @@ int validation(t_fdf *fdf)
 	int 	tmp_col;
 
 	tmp_col = 0;
-	if ((fd = open(fdf->win.name, O_RDONLY)) < 1) // если файла нет!!!!!!!!!
+	if ((fd = open(fdf->win.name, O_RDONLY)) < 1)
 		return (-3);
 	while (get_next_line(fd, &str))
 	{
-		if (check_str(str)) // если файл некоректный!!!!!!!!!
+		if (check_str(str))
 			return (-2);
 		fdf->map.col = count_digit(str);
 		if (fdf->map.row == 0)
 			tmp_col = fdf->map.col;
 		else if (fdf->map.col != tmp_col)
 			return (-4);
-
 		fdf->map.str_map = ft_str_rejoin(fdf->map.str_map, str);
 		ft_strdel(&str);
 		fdf->map.str_map = ft_str_rejoin(fdf->map.str_map, "\n");
@@ -107,4 +106,3 @@ int validation(t_fdf *fdf)
 	ft_strdel(&str);
 	return (0);
 }
-

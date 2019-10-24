@@ -6,11 +6,15 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:57:57 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/24 13:32:48 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 20:56:59 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+/*
+**	Инициализирует два статических массива для хранинеия значений
+*/
 
 void	arr_game(t_map map, char **game_param, char **game_value)
 {
@@ -23,7 +27,6 @@ void	arr_game(t_map map, char **game_param, char **game_value)
 	game_param[6] = "x-axis:";
 	game_param[7] = "y-axis:";
 	game_param[8] = "z-axis:";
-
 	game_value[0] = "name";
 	game_value[1] = ft_itoa(WIDTH);
 	game_value[2] = ft_itoa(HEIGHT);
@@ -35,15 +38,36 @@ void	arr_game(t_map map, char **game_param, char **game_value)
 	game_value[8] = ft_itoa((int)ft_radtodeg(map.rotation_z));
 }
 
-void	start(void *mptr, void *wptr)
+/*
+**	Освобождает выделенную память после инициализации определенных значений в
+**	в массиве
+*/
+
+void	arr_regame(char **game_value)
+{
+	ft_strdel(&game_value[1]);
+	ft_strdel(&game_value[2]);
+	ft_strdel(&game_value[3]);
+	ft_strdel(&game_value[4]);
+	ft_strdel(&game_value[5]);
+	ft_strdel(&game_value[6]);
+	ft_strdel(&game_value[7]);
+	ft_strdel(&game_value[8]);
+}
+
+/*
+**	Выводит инстркуцию на экран
+*/
+
+void	start_info(void *mptr, void *wptr)
 {
 	int		i;
 	int		x;
 	int		y;
-	int 	color;
+	int		color;
 	char	*temp[11];
 
-	i = 10;
+	i = 11;
 	color = RED;
 	x = WIDTH / 2;
 	y = HEIGHT / 2 - i * 25;
@@ -58,15 +82,16 @@ void	start(void *mptr, void *wptr)
 	temp[8] = "[END], [PAGE DOWN] to Z rotate";
 	temp[9] = "[HOME], [PAGE UP] to X rotate";
 	temp[10] = "[DELETE], [ENTER] to reset";
-	while (i >= 0)
-	{
+	while (--i >= 0)
 		mlx_string_put(mptr, wptr, x - ft_strlen(temp[i]) * 5,
 			y + i * 35, color -= AQUAMARINE, temp[i]);
-		i--;
-	}
 }
 
-void	game(t_mlx *mlx, t_window *win, t_map map)
+/*
+**	Выводит названия и значения переменных на экран
+*/
+
+void	game_info(t_mlx *mlx, t_window *win, t_map map)
 {
 	int		color;
 	int		y;
@@ -78,18 +103,11 @@ void	game(t_mlx *mlx, t_window *win, t_map map)
 	i = 0;
 	y = 5;
 	value[0] = win->name;
-/*
- * добваить кнопок типа углы  оюб
- * углы поворотов
- * угол изометрии
- *
- * */
 	while (i < 9)
 	{
-		color = BISQUE3;
 		if (i > 0)
 			y += 30;
-		mlx_string_put(mlx->ptr, win->ptr, 5, y, color, param[i]);
+		mlx_string_put(mlx->ptr, win->ptr, 5, y, BISQUE3, param[i]);
 		if (i == 3)
 			color = map.scale > MIN_SCALE && map.scale < MAX_SCALE ? GREEN : RED;
 		else if (i == 4)
@@ -99,15 +117,21 @@ void	game(t_mlx *mlx, t_window *win, t_map map)
 		mlx_string_put(mlx->ptr, win->ptr, 90, y, color, value[i]);
 		i++;
 	}
+	arr_regame(value);
 }
+
+/*
+**	Выводит информацию на экран
+*/
 
 void	info(t_fdf *fdf, int check)
 {
 	if (check == 1)
 	{
-		game(&fdf->mlx, &fdf->win, fdf->map);
-		//put_map_point_fd(1, fdf->map.other, fdf->map.row, fdf->map.col);
+		game_info(&fdf->mlx, &fdf->win, fdf->map);
+		if (fdf->map.loger > 0)
+			put_map_point_fd(1, fdf->map.other, fdf->map.row, fdf->map.col);
 	}
 	else if (check == 0)
-		start(fdf->mlx.ptr, fdf->win.ptr);
+		start_info(fdf->mlx.ptr, fdf->win.ptr);
 }

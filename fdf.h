@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 20:19:18 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/24 14:13:49 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 20:50:21 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,13 @@
 # define HEIGHT 1000.0
 
 /*
-**	Коды клавишь
+**	Коды клавишь и мыши
 */
 
-# define MUSE_CLICK_LEFT 1
-# define MUSE_CLICK_RIGHT 2
+# define EVENT_KEY_DOWN 2
+# define EVENT_MOUSE_CLICK 4
 # define MOUSE_SCROLL_BACKWARD 4
 # define MOUSE_SCROLL_FORWARD 5
-
-# define KEY_G 5
-# define KEY_H 4
-# define KEY_B 11
-# define KEY_N 45
-
 # define KEY_C 8
 # define KEY_Y 16
 # define KEY_T 17
@@ -37,6 +31,7 @@
 # define KEY_EQUALS 24
 # define KEY_MINUS 27
 # define KEY_ENTER 36
+# define KEY_L 37
 # define KEY_BACK_SPASE 49
 # define KEY_SPASE 51
 # define KEY_ESC 53
@@ -51,7 +46,7 @@
 # define KEY_UP 126
 
 /*
-**	Коды клавишь
+**	Коды цветов
 **	https://www.color-hex.com/color-names.html
 */
 
@@ -61,7 +56,6 @@
 # define AQUAMARINE 0x66cdaa
 # define BISQUE3 0xcdb79e
 # define DEEPSKYBLUE3 0x009acd
-
 
 /*
 **	Минимум, максимум и шаг расчетных переменных
@@ -74,6 +68,13 @@
 # define MAX_HEIGTN 20
 # define STEP_HEIGTN 1
 
+/*
+**	Флаги
+*/
+
+# define INFO_START 0
+# define INFO_GAME 1
+
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -82,21 +83,12 @@
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
 
-//typedef struct		s_color
-//{
-//	unsigned char	red;
-//	unsigned char	green;
-//	unsigned char	blue;
-//	float			brightness;
-//}					t_color;
-
 typedef struct	s_point
 {
 	double		x;
 	double		y;
 	double		z;
 	int 		color;
-	//t_color		_color;
 }				t_point;
 
 typedef struct	s_line
@@ -147,6 +139,8 @@ typedef struct	s_map
 	double		height;
 	double		iso;
 	int 		plato;
+	int 		loger;
+	int 		flag_color;
 	int			row;
 	int 		col;
 	char 		*str_map;
@@ -165,6 +159,7 @@ void			put_map_point_fd(int fd, t_point **point, int row, int col);
 void			put_line(t_mlx *mlx, t_window *win, t_line *line);
 void			draw_grid(t_fdf *fdf);
 void			info(t_fdf *fdf, int check);
+int				hook_deal_key(int key, void *param);
 void			calculation(t_map *map);
 void			fdf(t_fdf *fdf);
 int				validation(t_fdf *fdf);

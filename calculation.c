@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:31:07 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/23 14:25:28 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 16:20:56 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,17 @@ void	scale(t_map *map, t_point *point, int i, int j)
 
 void	calculation(t_map *map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-
 	while (j < map->row)
 	{
 		while (i < map->col)
 		{
 			map->other[j][i] = map->start[j][i];
-			scale(map, &map->other[j][i], i , j);
+			scale(map, &map->other[j][i], i ,j);
 			rotation(map, &map->other[j][i]);
 			iso(map->iso, &map->other[j][i]);
 			map->other[j][i].x += map->centr_x;

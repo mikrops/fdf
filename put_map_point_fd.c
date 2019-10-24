@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:01:49 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/23 16:04:41 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/24 16:42:58 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,18 @@ void	put_map_point_fd(int fd, t_point **point, int row, int col)
 	{
 		while (i < col)
 		{
-			dprintf(fd, "[%.f,%.f,%.f,%d]\t", point[j][i].x, point[j][i].y, point[j][i].z, point[j][i].color);
-//			ft_putnbr_fd(point[j][i].z, fd);
-//			ft_putchar_fd('\t', fd);
+			ft_putchar_fd('[', fd);
+			ft_putnbr_fd((int)point[j][i].x, fd);
+			ft_putchar_fd(',', 1);
+			ft_putnbr_fd((int)point[j][i].y, fd);
+			ft_putchar_fd(',', 1);
+			ft_putnbr_fd((int)point[j][i].z, fd);
+			ft_putchar_fd(',', 1);
+			ft_putnbr_fd(point[j][i].color, fd);
+			ft_putstr_fd("]\t", fd);
 			i++;
 		}
-		dprintf(fd, "\n");
-//		ft_putstr_fd("\n", fd);
+		ft_putchar_fd('\n', fd);
 		i = 0;
 		j++;
 	}
