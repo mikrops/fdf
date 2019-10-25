@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 20:19:18 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/25 17:08:07 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/25 18:32:52 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 # include "minilibx_macos/mlx.h"
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"

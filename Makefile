@@ -6,7 +6,7 @@
 #    By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 17:09:24 by mmonahan          #+#    #+#              #
-#    Updated: 2019/10/25 18:01:39 by mmonahan         ###   ########.fr        #
+#    Updated: 2019/10/25 18:27:12 by mmonahan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,9 +53,9 @@ clean:
 
 fclean: clean
 		@make -C libft/ fclean
-		@make -C minilibx_macos/ fclean
 		@echo "Удаляем $(NAME)"
 		@rm -f $(NAME)
+		@rm -f fdf.out
 
 %.o: %.c $(HEADER)
 		gcc $(FLAGS) -c $< -o $@
