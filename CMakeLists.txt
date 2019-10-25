@@ -95,9 +95,7 @@ add_executable(fdf main.c fdf.h
         libft/libft.h
         get_next_line/get_next_line.c
         get_next_line/get_next_line.h
-        put_line.c input_map.c fdf.c draw_grid.c initialization.c calculation.c info.c validation.c put_map_point_fd.c
-        hook_deal_key.c
-        )
+        put_line.c input_map.c fdf.c draw_grid.c initialization.c calculation.c info.c validation.c put_map_point_fd.c hook_deal_key.c)
 
 target_link_libraries(${PROJECT_NAME}
         "mlx"

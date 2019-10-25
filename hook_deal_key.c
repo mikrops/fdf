@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 19:43:11 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/24 20:56:59 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/25 17:05:15 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,27 @@ void	deal_start(t_fdf *fdf)
 
 void	deal_angle(int key, t_fdf *fdf)
 {
-	if (key == KEY_PAGE_UP)
+	if (key == KEY_H)
 		fdf->map.rotation_x += ft_degtorad(5);
-	else if (key == KEY_HOME)
+	else if (key == KEY_G)
 		fdf->map.rotation_x -= ft_degtorad(5);
 	else if (key == KEY_BACK_SPASE)
 		fdf->map.rotation_y += ft_degtorad(5);
 	else if (key == KEY_SPASE)
 		fdf->map.rotation_y -= ft_degtorad(5);
-	else if (key == KEY_PAGE_DOWN)
+	else if (key == KEY_B)
 		fdf->map.rotation_z += ft_degtorad(5);
-	else if (key == KEY_END)
+	else if (key == KEY_V)
 		fdf->map.rotation_z -= ft_degtorad(5);
 	else if (key == KEY_ONE)
 		fdf->map.iso = ft_degtorad(0);
 	else if (key == KEY_TWO)
 		fdf->map.iso = ft_degtorad(30);
+	else if (key == KEY_3)
+	{
+		fdf->map.rotation_x = ft_degtorad(-90);
+		fdf->map.rotation_y = ft_degtorad(-90);
+	}
 	else if (key == KEY_T)
 		fdf->map.iso -= ft_degtorad(1);
 	else if (key == KEY_Y)
@@ -69,9 +74,9 @@ void	deal_move(int key, t_fdf *fdf)
 	else if (key == KEY_UP)
 		fdf->map.centr_y += -10.0;
 	else if (key == KEY_EQUALS)
-		fdf->map.height += fdf->map.height < MAX_HEIGTN ? STEP_HEIGTN : 0;
+		fdf->map.height += fdf->map.height < MAX_HGT ? STEP_HGT : 0;
 	else if (key == KEY_MINUS)
-		fdf->map.height -= fdf->map.height > MIN_HEIGTN ? STEP_HEIGTN : 0;
+		fdf->map.height -= fdf->map.height > MIN_HGT ? STEP_HGT : 0;
 	else if (key == KEY_ENTER)
 	{
 		fdf->map.centr_x = WIDTH / 1.9;
@@ -91,8 +96,8 @@ int		hook_deal_key(int key, void *param)
 			key == KEY_UP || key == KEY_EQUALS || key == KEY_MINUS ||
 			key == KEY_ENTER || key == KEY_C || key == KEY_ESC || key == KEY_L)
 		deal_move(key, fdf);
-	else if (key == KEY_PAGE_UP || key == KEY_HOME || key == KEY_BACK_SPASE ||
-			key == KEY_SPASE || key == KEY_PAGE_DOWN || key == KEY_END ||
+	else if (key == KEY_H || key == KEY_G || key == KEY_BACK_SPASE ||
+			key == KEY_SPASE || key == KEY_B || key == KEY_V || key == KEY_3 ||
 			key == KEY_ONE || key == KEY_TWO || key == KEY_T || key == KEY_Y)
 		deal_angle(key, fdf);
 	else

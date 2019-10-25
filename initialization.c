@@ -20,7 +20,7 @@ void	init_map(t_map *map)
 	map->col = 0;
 	map->row = 0;
 	map->centr_x = WIDTH / 1.9;
-	map->centr_y = HEIGHT/ 1.83;
+	map->centr_y = HEIGHT / 1.83;
 	map->scale = 1;
 	map->height = 0;
 	map->rotation_x = ft_degtorad(0);
@@ -37,7 +37,8 @@ void	initialization(t_fdf *fdf, char *name)
 	fdf->win.height = HEIGHT;
 	fdf->win.title = "21.fdf.mmonahan";
 	fdf->win.name = name;
-	fdf->win.ptr = mlx_new_window(fdf->mlx.ptr, fdf->win.width, fdf->win.height, fdf->win.title);
+	fdf->win.ptr = mlx_new_window(fdf->mlx.ptr, fdf->win.width, fdf->win.height,
+		fdf->win.title);
 	fdf->win.themes = 0;
 	init_map(&fdf->map);
 }

@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 14:17:35 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/24 16:20:56 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/25 16:55:59 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	hexlen_1(char *hex)
 **	Возвращает количество чисел в строке, игнорируя цвет
 */
 
-static int count_digit(char *str)
+static int	count_digit(char *str)
 {
 	int i;
 	int digit;
@@ -39,7 +39,7 @@ static int count_digit(char *str)
 	i = 0;
 	digit = 0;
 	count = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (ft_isdigit(str[i]))
 		{
@@ -62,7 +62,7 @@ static int count_digit(char *str)
 **	Проверяет на наличие валидных символов в строке
 */
 
-int	check_str(char const *str)
+static int	check_str(char const *str)
 {
 	int i;
 
@@ -80,24 +80,24 @@ int	check_str(char const *str)
 	return (0);
 }
 
-int validation(t_fdf *fdf)
+int			validation(t_fdf *fdf)
 {
 	int		fd;
 	char	*str;
-	int 	tmp_col;
+	int		tmp_col;
 
 	tmp_col = 0;
 	if ((fd = open(fdf->win.name, O_RDONLY)) < 1)
-		return (-3);
+		return (ERROR_MISSING_FILE);
 	while (get_next_line(fd, &str))
 	{
 		if (check_str(str))
-			return (-2);
+			return (ERROR_INVALID_FILE);
 		fdf->map.col = count_digit(str);
 		if (fdf->map.row == 0)
 			tmp_col = fdf->map.col;
 		else if (fdf->map.col != tmp_col)
-			return (-4);
+			return (ERROR_INCOMPLETE_FILE);
 		fdf->map.str_map = ft_str_rejoin(fdf->map.str_map, str);
 		ft_strdel(&str);
 		fdf->map.str_map = ft_str_rejoin(fdf->map.str_map, "\n");

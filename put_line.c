@@ -6,13 +6,13 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 17:16:22 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/24 19:13:45 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/25 16:51:03 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static int color(int themes, t_line *line)
+static int	color(int themes, t_line *line)
 {
 	int	col;
 
@@ -29,15 +29,15 @@ static int color(int themes, t_line *line)
 			line->start.color == line->end.color)
 			col = line->start.color;
 	}
-	return(col);
+	return (col);
 }
 
 static void	init_bresenham(t_bresenham *bresenham, t_line *line)
 {
-    bresenham->x1 = (int)line->start.x;
-    bresenham->y1 = (int)line->start.y;
-    bresenham->x2 = (int)line->end.x;
-    bresenham->y2 = (int)line->end.y;
+	bresenham->x1 = (int)line->start.x;
+	bresenham->y1 = (int)line->start.y;
+	bresenham->x2 = (int)line->end.x;
+	bresenham->y2 = (int)line->end.y;
 	bresenham->deltax = abs(bresenham->x2 - bresenham->x1);
 	bresenham->deltay = abs(bresenham->y2 - bresenham->y1);
 	bresenham->deltaerror = bresenham->deltax - bresenham->deltay;
@@ -48,10 +48,10 @@ static void	init_bresenham(t_bresenham *bresenham, t_line *line)
 
 void		put_line(t_mlx *mlx, t_window *win, t_line *line)
 {
-	int col;
+	int			col;
+	t_bresenham	bresenham;
 
 	col = AQUAMARINE;
-	t_bresenham	bresenham;
 	init_bresenham(&bresenham, line);
 	while (bresenham.x1 != bresenham.x2 || bresenham.y1 != bresenham.y2)
 	{

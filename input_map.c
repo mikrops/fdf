@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:06:20 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/24 16:20:56 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/25 16:44:32 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	hexlen(char *hex)
 **	Заполнение элемента массива типа структура point
 */
 
-int	fill_point(t_point *point, char *str, int row, int col)
+static int	fill_point(t_point *point, char *str, int row, int col)
 {
 	int	i;
 
@@ -81,16 +81,16 @@ static void	fill_map_point(t_point **point, char *str, int y)
 **	Проверяет валидность матрицы точек
 */
 
-int check_point(t_map *map)
+static int	check_point(t_map *map)
 {
 	int j;
 	int i;
 
 	j = 0;
 	i = 0;
-	while(j < map->row)
+	while (j < map->row)
 	{
-		while(i < map->col)
+		while (i < map->col)
 		{
 			if (map->start[j][i].x == 0 || map->start[j][i].y == 0)
 				return (1);
@@ -111,25 +111,23 @@ int check_point(t_map *map)
 **				-4 в случае путсых точек
 */
 
-int	input_map(t_fdf *fdf)
+int			input_map(t_fdf *fdf)
 {
-	int	val = 0;
+	int	val;
 
 	val = validation(fdf);
-	if (val < 0)
+	if (val != 0)
 		return (val);
 	if (fdf->map.col < 2 || fdf->map.row < 1)
-		return (-1);
+		return (ERROR_EMPTY_FILE);
 	fdf->map.start = (t_point **)ft_map_void(fdf->map.row, fdf->map.col,
 		sizeof(t_point *), sizeof(t_point));
 	fdf->map.other = (t_point **)ft_map_void(fdf->map.row, fdf->map.col,
 		sizeof(t_point *), sizeof(t_point));
-
 	fill_map_point(fdf->map.start, fdf->map.str_map, fdf->map.row);
 	if (check_point(&fdf->map))
-		return (-4);
-	printf("-----------start--------\n");
+		return (ERROR_INCOMPLETE_FILE);
+	ft_putstr("-----------start--------\n");
 	put_map_point_fd(1, fdf->map.start, fdf->map.row, fdf->map.col);
-	printf("row %d col %d\n", fdf->map.row, fdf->map.col);
 	return (0);
 }

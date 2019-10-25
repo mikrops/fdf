@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:57:57 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/24 20:56:59 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/25 17:07:46 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ void	game_info(t_mlx *mlx, t_window *win, t_map map)
 			y += 30;
 		mlx_string_put(mlx->ptr, win->ptr, 5, y, BISQUE3, param[i]);
 		if (i == 3)
-			color = map.scale > MIN_SCALE && map.scale < MAX_SCALE ? GREEN : RED;
+			color = map.scale > MIN_SCL && map.scale < MAX_SCL ? GREEN : RED;
 		else if (i == 4)
-			color = map.height > MIN_HEIGTN && map.height < MAX_HEIGTN ? GREEN : RED;
+			color = map.height > MIN_HGT && map.height < MAX_HGT ? GREEN : RED;
 		else
 			color = DEEPSKYBLUE3;
 		mlx_string_put(mlx->ptr, win->ptr, 90, y, color, value[i]);
