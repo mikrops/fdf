@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:10:27 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/24 16:20:56 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/26 14:58:47 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,10 @@ void	init_map(t_map *map)
 
 void	initialization(t_fdf *fdf, char *name)
 {
-	fdf->mlx.ptr = mlx_init();
 	fdf->win.width = WIDTH;
 	fdf->win.height = HEIGHT;
 	fdf->win.title = "21.fdf.mmonahan";
 	fdf->win.name = name;
-	fdf->win.ptr = mlx_new_window(fdf->mlx.ptr, fdf->win.width, fdf->win.height,
-		fdf->win.title);
 	fdf->win.themes = 0;
 	init_map(&fdf->map);
 }

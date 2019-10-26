@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 15:31:07 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/24 16:20:56 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/26 15:39:53 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,17 @@ void	scale(t_map *map, t_point *point, int i, int j)
 	map->other[j][i].x = map->scale * i - map->col * map->scale / 2;
 	map->other[j][i].y = map->scale * j - map->row * map->scale / 2;
 	if (point->z > map->plato)
-		point->z = (point->z + map->height) * map->scale;
+		point->z *= map->scale;
 	else if (point->z < map->plato)
-		point->z = (point->z - map->height) * map->scale;
+		point->z *= map->scale;
+}
+
+void	height(t_map *map, t_point *point)
+{
+	if (point->z > map->plato)
+		point->z += map->height;
+	else if (point->z < map->plato)
+		point->z -= map->height;
 }
 
 void	calculation(t_map *map)
@@ -68,6 +76,7 @@ void	calculation(t_map *map)
 		while (i < map->col)
 		{
 			map->other[j][i] = map->start[j][i];
+			height(map, &map->other[j][i]);
 			scale(map, &map->other[j][i], i, j);
 			rotation(map, &map->other[j][i]);
 			iso(map->iso, &map->other[j][i]);

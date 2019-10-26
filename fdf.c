@@ -6,7 +6,7 @@
 /*   By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 12:59:14 by mmonahan          #+#    #+#             */
-/*   Updated: 2019/10/25 17:07:56 by mmonahan         ###   ########.fr       */
+/*   Updated: 2019/10/26 14:58:47 by mmonahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ static int	mouse_click(int key, int m_x, int m_y, void *param)
 
 void		fdf(t_fdf *fdf)
 {
+	fdf->mlx.ptr = mlx_init();
+	fdf->win.ptr = mlx_new_window(fdf->mlx.ptr, fdf->win.width, fdf->win.height,
+		fdf->win.title);
 	start_poisition(fdf);
 	calculation(&fdf->map);
 	ft_putstr("-----------fdf-----------\n");
