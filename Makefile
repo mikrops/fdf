@@ -6,7 +6,7 @@
 #    By: mmonahan <mmonahan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 17:09:24 by mmonahan          #+#    #+#              #
-#    Updated: 2019/10/25 18:27:12 by mmonahan         ###   ########.fr        #
+#    Updated: 2019/10/26 14:48:46 by mmonahan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,6 @@ HEADER = fdf.h
 MLX = minilibx_macos
 
 INCLUDES_MLX = $(MLX)/*.h
-
-FLAGS_MLX =
 
 FLAGS = -Wall -Werror -Wextra
 
@@ -60,5 +58,5 @@ fclean: clean
 %.o: %.c $(HEADER)
 		gcc $(FLAGS) -c $< -o $@
 
-re: clean fclean
+re: clean fclean all
 .PHONY: all clean fclean re
